@@ -14,7 +14,12 @@ function iniciar(){
 }
 
         // Function Constructor
-
+class Variedad{
+    constructor(id, nombre){
+        this.id= id
+        this.nombre= nombre
+    }
+}
 class Burritos{
     constructor (id, tipo, variedad, precio){ 
         this.id=id
@@ -48,7 +53,10 @@ class Bebidas{
     }
 }
             //Construyendo Objetos 
-
+const variedadBurrito = new Variedad(1,"Burritos")
+const variedadTaco = new Variedad(2,"Tacos")
+const variedadPostre = new Variedad(3,"Postres")
+const variedadBebida = new Variedad(4,"Bebidas")
 const burritoCarne = new Burritos(1,"Burrito","Carne",650)
 const burritoCerdo = new Burritos(2,"Burrito","Cerdo",570)
 const burritoPollo = new Burritos(3,"Burrito","Pollo",500)
@@ -67,7 +75,8 @@ const bebidaTrago = new Bebidas(14,"Bebida","Margarita",300)
 
             //Armando arrays con los objetos 
 
-
+const menu = []
+menu.push(variedadTaco,variedadBurrito,variedadBebida,variedadPostre)
 let listaBurritos=[]
 listaBurritos.push(burritoCarne,burritoCerdo,burritoPollo,burritoVeggie)
 let listaTacos=[]
@@ -209,17 +218,17 @@ function personalizarNombre(){
 const nombre=prompt("Ingresa tu nombre!")
 let titulo=document.getElementById("titulo")
 console.log(titulo.innerText)
-titulo.innerText = `Bienvenido, ${nombre}!`
+titulo.innerText = `Bienvenid@, ${nombre}!`
 console.log(titulo.innerText)
 }
 function crearLista(){
-    const listaVariedades=document.getElementById("listaVariedades")
-    for (let variedad1 of variedades){
-        let li = document.createElement("li")
-        li.innerHTML = variedad1
-        listaVariedades.appendChild(li)
-    }
-    cartaResto()
+    const listaVariedades = document.querySelector("#listaVariedades")
+    menu.forEach((categoria)=>{
+        const miBoton = document.createElement("button");
+        miBoton.setAttribute("class", "botonMenu");
+        miBoton.innerHTML=categoria.nombre;
+        listaVariedades.appendChild(miBoton)
+    })
 }
 function mostrarPedidoFinal(){
     const pedidoFinal = document.getElementById("pedidoFinal")
@@ -237,3 +246,4 @@ function mostrarPedidoFinal(){
 // Fin de declaracion de functions
 // Inicio del codigo ejecutable
 iniciar()
+console.log(menu)

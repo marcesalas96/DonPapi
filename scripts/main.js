@@ -57,9 +57,11 @@ function crearMenu(productosFiltrados,idCategoria){
             contenedorHijo.setAttribute("id","div__hijo")
             contenedorHijo.innerHTML=`<p> 
             ${plato.id}) ${plato.tipo} ${plato.variedad}, precio: $${plato.precio}
-            </p> <img src="${plato.imagen}" class="div__imagen" alt="Imagen de un burrito de ${plato.variedad}"> <div class="div__botones"><button class="botonMenu" id="botonDiv">+</button><button class="botonMenu" id="botonDiv">-</button></div>`
+            </p> <img src="${plato.imagen}" class="div__imagen" alt="Imagen de un burrito de ${plato.variedad}"> <div class="div__botones"><button class="botonMenu" id="botonDiv+">+</button><button class="botonMenu" id="botonDiv-">-</button></div>`
             divHijo.append(contenedorHijo)
         })
+        const boton = document.getElementById("botonDiv+")
+        boton.addEventListener("click",()=>añadirCarrito(productosFiltrados))
         contador++
         if (contador>1){
             cerrarPlatos()
@@ -125,6 +127,11 @@ function cerrarPlatos(){
     cerrar.forEach((nodo)=>{
         div.removeChild(nodo)})
     contador=0
+}
+function añadirCarrito(productosFiltrados){
+    let pedido=[]
+    pedido.append(productosFiltrados.tipo+productosFiltrados.variedad)
+    console.log(pedido)
 }
 
 // Fin de declaracion de functions

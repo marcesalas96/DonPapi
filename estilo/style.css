@@ -82,13 +82,37 @@ main{
 }
 
 .div__burritos,.div__tacos,.div__bebidas,.div__postres{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    gap: 30px;
+}
+#div__hijo{
     color: black;
     display: flex;
+    gap:15px;
     flex-direction: column;
-    gap: 15px;
+    align-items: center;
+    justify-content: center;
     border: 2px white solid;
     background-color: orange;
     padding: 15px;
     border-radius: 6px;
     font-weight: 600;
+}
+.div__botones{
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+}
+#botonDiv{
+    width: 50px;
+    background:rgb(196, 98, 0);
+    color: black;
+}
+img{
+    width: 250px;
+    height: 250px;
+    object-fit: cover;
 }

@@ -5,7 +5,6 @@ function iniciar(){
         cerrarPlatos()
 }    
 function personalizarNombre(){
-const nombre=prompt("Ingresa tu nombre!")
 let titulo=document.getElementById("titulo")
 titulo.innerText = `Bienvenid@, ${nombre}!`
 
@@ -19,6 +18,7 @@ function crearBotones(){
         miBoton.addEventListener("click", ()=> mostrarPlatos(categoria.id))
         btnMenu.appendChild(miBoton)
     })
+    crearCarrito()
 }
 
 
@@ -26,42 +26,18 @@ function mostrarPlatos(idCategoria){
     const productosFiltrados = listaComidas.filter(comida=> comida.categoria === idCategoria)
     const divPadre = document.querySelector("#listaMenu")
     const contenedor =document.createElement("div")
-    if (idCategoria==1){
-        contenedor.setAttribute("class","div__burritos")
+        contenedor.setAttribute("class","div__comidas")
         contenedor.setAttribute("id","div__padre")
         divPadre.appendChild(contenedor)
-    }
-    else if (idCategoria==2){
-        contenedor.setAttribute("class","div__tacos")
-        contenedor.setAttribute("id","div__padre")
-        divPadre.appendChild(contenedor)
-    }
-    else if (idCategoria==3){
-        contenedor.setAttribute("class","div__postres")
-        contenedor.setAttribute("id","div__padre")
-        divPadre.appendChild(contenedor)
-    }
-    else if (idCategoria==4){
-        contenedor.setAttribute("class","div__bebidas")
-        contenedor.setAttribute("id","div__padre")
-        divPadre.appendChild(contenedor)
-    }
     crearMenu(productosFiltrados,idCategoria)
     
 }
 function crearMenu(productosFiltrados,idCategoria){
     while (idCategoria==1){
-        const divHijo = document.querySelector(".div__burritos")
+        const divHijo = document.querySelector(".div__comidas")
         productosFiltrados.forEach((plato)=>{
-            const contenedorHijo = document.createElement("div")
-            contenedorHijo.setAttribute("id","div__hijo")
-            contenedorHijo.innerHTML=`<p> 
-            ${plato.id}) ${plato.tipo} ${plato.variedad}, precio: $${plato.precio}
-            </p> <img src="${plato.imagen}" class="div__imagen" alt="Imagen de un burrito de ${plato.variedad}"> <div class="div__botones"><button class="botonMenu" id="botonDiv+">+</button><button class="botonMenu" id="botonDiv-">-</button></div>`
-            divHijo.append(contenedorHijo)
+            mostrarVariedades(plato,divHijo)
         })
-        const boton = document.getElementById("botonDiv+")
-        boton.addEventListener("click",()=>añadirCarrito(productosFiltrados))
         contador++
         if (contador>1){
             cerrarPlatos()
@@ -70,48 +46,31 @@ function crearMenu(productosFiltrados,idCategoria){
         
     }
     while (idCategoria==2){
-        const divHijo = document.querySelector(".div__tacos")
+        const divHijo = document.querySelector(".div__comidas")
         productosFiltrados.forEach((plato)=>{
-            const contenedorHijo = document.createElement("div")
-            contenedorHijo.setAttribute("id","div__hijo")
-            contenedorHijo.innerHTML=`<p> 
-            ${plato.id}) ${plato.tipo} ${plato.variedad}, precio: $${plato.precio}
-            </p> <img src="${plato.imagen}" class="div__imagen" alt="Imagen de un burrito de ${plato.variedad}">`
-            divHijo.append(contenedorHijo)
+            mostrarVariedades(plato,divHijo)
         })
         contador++
-        console.log(contador)
         if (contador>1){
             cerrarPlatos()
         }
         break
     }
     while (idCategoria==3){
-        const divHijo = document.querySelector(".div__postres")
+        const divHijo = document.querySelector(".div__comidas")
         productosFiltrados.forEach((plato)=>{
-            const contenedorHijo = document.createElement("div")
-            contenedorHijo.setAttribute("id","div__hijo")
-            contenedorHijo.innerHTML=`<p> 
-            ${plato.id}) ${plato.tipo} ${plato.variedad}, precio: $${plato.precio}
-            </p> <img src="${plato.imagen}" class="div__imagen" alt="Imagen de un burrito de ${plato.variedad}">`
-            divHijo.append(contenedorHijo)
+            mostrarVariedades(plato,divHijo)
         })
         contador++
-        console.log(contador)
         if (contador>1){
             cerrarPlatos()
         }
         break
     }
     while (idCategoria==4){
-        const divHijo = document.querySelector(".div__bebidas")
+        const divHijo = document.querySelector(".div__comidas")
         productosFiltrados.forEach((plato)=>{
-            const contenedorHijo = document.createElement("div")
-            contenedorHijo.setAttribute("id","div__hijo")
-            contenedorHijo.innerHTML=`<p> 
-            ${plato.id}) ${plato.tipo} ${plato.variedad}, precio: $${plato.precio}
-            </p> <img src="${plato.imagen}" class="div__imagen" alt="Imagen de un burrito de ${plato.variedad}">`
-            divHijo.append(contenedorHijo)
+            mostrarVariedades(plato,divHijo)
         })
         contador++
         if (contador>1){
@@ -120,20 +79,79 @@ function crearMenu(productosFiltrados,idCategoria){
         break
     }
 }
+function mostrarVariedades(plato,divHijo){
+    const contenedorHijo = document.createElement("div")
+    contenedorHijo.setAttribute("id","div__hijo")
+    contenedorHijo.innerHTML=`<p> 
+    ${plato.id}) ${plato.tipo} ${plato.variedad}, precio: $${plato.precio}
+    </p> <img src="${plato.imagen}" class="div__imagen" alt="Imagen de un burrito de ${plato.variedad}">
+    <div class="div__botones"><button class="botonMenu" id="botonDiv+">+</button> <button class="botonMenu" id="botonDiv-">-</button></div> `
+    divHijo.append(contenedorHijo)
+    const boton = document.getElementById("botonDiv+")
+    boton.addEventListener("click",()=>agregarAlCarrito(comidas))
+}
 function cerrarPlatos(){
     let div = document.querySelector("#listaMenu");
-    console.log(div)
     let cerrar= document.querySelectorAll("#div__padre");
     cerrar.forEach((nodo)=>{
         div.removeChild(nodo)})
     contador=0
 }
-function añadirCarrito(productosFiltrados){
-    let pedido=[]
-    pedido.append(productosFiltrados.tipo+productosFiltrados.variedad)
-    console.log(pedido)
+function crearCarrito(){
+    const main = document.querySelector("main")
+    const div = document.createElement("div")
+    div.setAttribute("id","divCarrito")
+    div.innerHTML = `<div class="div__carrito"><button class="botonMenu" id="botonCarrito">Mostrar Carrito</button></div>`
+    main.appendChild(div)
+    let boton = document.querySelector("#botonCarrito")
+    boton.addEventListener("click",()=>mostrarCarrito())
+    
 }
+function mostrarCarrito(){
+    let div = document.querySelector(".div__carrito")
+    let divCarrito = document.querySelector(".div__carrito__div")
+    if(divCarrito === null)
+    
+    {
+    divCarrito = document.createElement("div");
+    divCarrito.setAttribute("class","div__carrito__div")
+    divCarrito.innerHTML = `<div class="div__carrito__div"><h3>${nombre}, este es tu pedido!</h3></div>`
+    div.appendChild(divCarrito)
+    }
+    actualizarCarrito()
+}
+function actualizarCarrito(){
+    let contenedor = document.getElementsByClassName("div__carrito__div")
+    contenedor.innerHTML=""
+    let prods = miCarrito.productos
+    let nuevoContenedor=document.createElement("div")
+    nuevoContenedor.setAttribute("class","div__carrito__div__productos")
+    prods.forEach(listaComidas=>{
+        let nodoLi = document.createElement("div")
+        nodoLi.innerHTML = `${listaComidas.tipo} de ${listaComidas.variedad} - $${listaComidas.precio}`
+        nuevoContenedor.appendChild(nodoLi)
+    })
+    miCarrito.guardar()
+}
+function agregarAlCarrito(comidas){
+    console.log(comidas)
+    let products = comidas.map(el=>el.id)
+    console.log(products)
+    let index = products.some(el=>el===comidas.id)
+    console.log(comidas[index])
+    // let product = listaComidas[index]
+    // miCarrito.addProducto(product)
+    // actualizarCarrito();
+}
+
+
 
 // Fin de declaracion de functions
 // Inicio del codigo ejecutable
 iniciar()
+// if(!miCarrito){
+//     miCarrito = new Carrito([])
+// }
+// else{
+//     miCarrito=new Carrito(data);
+// }

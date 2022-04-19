@@ -17,13 +17,21 @@
             const postreVolcan = new Postres(12,"Postre","Volcan de chocolate",450,3, src="../media/volcanChoco.jpg")
             const bebidaCoca = new Bebidas(13,"Bebida","Coca-Cola",150,4, src="../media/cocaCola.jpg")
             const bebidaTrago = new Bebidas(14,"Bebida","Margarita",300,4, src="../media/margarita.jpg")
-
+            let miCarrito = new Carrito([])
             // Declaracion variables
 let cuentaParcial = 0
 let cuentaTotal = 0
 let contador = 0
+let comidas=[]
+const nombre=prompt("Ingresa tu nombre!")
+const data = JSON.parse(localStorage.getItem("MI__CARRITO"))
 
 const menu = []
 menu.push(variedadBurrito,variedadTaco,variedadPostre,variedadBebida)
 const listaComidas = []
 listaComidas.push(burritoCarne,burritoCerdo,burritoPollo,burritoVeggie,tacoPastor,tacoCerdo,tacoMixto,tacoVeggie,postreBanana,postreBrownie,postreHelado,postreVolcan,bebidaCoca,bebidaTrago)
+listaComidas.forEach(comida => {
+    comidas.push({id: comida.id, tipo: comida.tipo, variedad: comida.variedad, precio: comida.precio })
+});
+
+console.log(comidas)

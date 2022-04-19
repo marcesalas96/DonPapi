@@ -82,7 +82,7 @@ main{
 
 }
 
-.div__burritos,.div__tacos,.div__bebidas,.div__postres{
+.div__comidas{
     display: flex;
     flex-direction: row;
     justify-content: space-around;
@@ -116,4 +116,37 @@ img{
     width: 250px;
     height: 250px;
     object-fit: cover;
+}
+#divCarrito{
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    padding-top: 40px;
+}
+#botonMenu{
+    width: 150px;
+}
+.div__carrito{
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    justify-content: center;
+    align-items: center;
+}
+.div__carrito__div{
+    color: black;
+    display: flex;
+    gap:15px;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border: 2px white solid;
+    background-color: orange;
+    padding: 5px;
+    border-radius: 6px;
+    font-weight: 600;
+}
+.div__carrito__div__productos{
+    display: flex;
+    flex-direction: column;
 }

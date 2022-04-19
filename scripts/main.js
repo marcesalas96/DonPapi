@@ -79,16 +79,16 @@ function crearMenu(productosFiltrados,idCategoria){
         break
     }
 }
-function mostrarVariedades(plato,divHijo){
+function mostrarVariedades(plato,divHijo,productosFiltrados){
     const contenedorHijo = document.createElement("div")
     contenedorHijo.setAttribute("id","div__hijo")
     contenedorHijo.innerHTML=`<p> 
     ${plato.id}) ${plato.tipo} ${plato.variedad}, precio: $${plato.precio}
     </p> <img src="${plato.imagen}" class="div__imagen" alt="Imagen de un burrito de ${plato.variedad}">
-    <div class="div__botones"><button class="botonMenu" id="botonDiv+">+</button> <button class="botonMenu" id="botonDiv-">-</button></div> `
+    <div class="div__botones"><button class="botonCarrito" id="botonDiv+${plato.id}">+</button> <button class="botonCarrito" id="botonDiv-${plato.id}">-</button></div> `
     divHijo.append(contenedorHijo)
-    const boton = document.getElementById("botonDiv+")
-    boton.addEventListener("click",()=>agregarAlCarrito(comidas))
+    const boton = document.getElementById(`botonDiv+${plato.id}`)
+    boton.addEventListener("click",()=>agregarAlCarrito(plato))
 }
 function cerrarPlatos(){
     let div = document.querySelector("#listaMenu");
@@ -133,15 +133,9 @@ function actualizarCarrito(){
     })
     miCarrito.guardar()
 }
-function agregarAlCarrito(comidas){
-    console.log(comidas)
-    let products = comidas.map(el=>el.id)
-    console.log(products)
-    let index = products.some(el=>el===comidas.id)
-    console.log(comidas[index])
-    // let product = listaComidas[index]
-    // miCarrito.addProducto(product)
-    // actualizarCarrito();
+function agregarAlCarrito(plato){
+    let comidaParaAgregar = comidas.find(el=>el.id==plato.id)
+    console.log(comidaParaAgregar)
 }
 
 

@@ -33,5 +33,3 @@ listaComidas.push(burritoCarne,burritoCerdo,burritoPollo,burritoVeggie,tacoPasto
 listaComidas.forEach(comida => {
     comidas.push({id: comida.id, tipo: comida.tipo, variedad: comida.variedad, precio: comida.precio })
 });
-
-console.log(comidas)

@@ -89,6 +89,8 @@ function mostrarVariedades(plato,divHijo,productosFiltrados){
     divHijo.append(contenedorHijo)
     const boton = document.getElementById(`botonDiv+${plato.id}`)
     boton.addEventListener("click",()=>agregarAlCarrito(plato))
+    const botonResta = document.getElementById(`botonDiv-${plato.id}`)
+    botonResta.addEventListener("click",()=>sacarDelCarrito(plato))
 }
 function cerrarPlatos(){
     let div = document.querySelector("#listaMenu");
@@ -132,11 +134,22 @@ function actualizarCarrito(){
     miCarrito.guardar()
     
 }
+
 function agregarAlCarrito(plato){
     let comidaParaAgregar = comidas.find(el=>el.id==plato.id)
     miCarrito.addProducto(comidaParaAgregar) 
+    console.log(miCarrito.productos.indexOf(comidaParaAgregar))
     actualizarCarrito()
 
+}
+function sacarDelCarrito(plato){
+    let comidaParaSacar = comidas.find(el=>el.id==plato.id)
+    let index = miCarrito.productos.indexOf(comidaParaSacar)
+    console.log(index)
+    miCarrito.removeProducto(index)
+    console.log(miCarrito)
+    
+    actualizarCarrito()
 }
 function mostrarCuentaTotal(){
     let contenedor = document.querySelector(".div__carrito")

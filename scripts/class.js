@@ -54,5 +54,7 @@ class Carrito{
     guardar(){
         localStorage.setItem("MI_CARRITO", JSON.stringify(this.productos))
     }
-    
+    removeProducto(index){
+        this.productos.splice(index,1)
+    }
 }

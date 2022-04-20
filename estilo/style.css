@@ -30,7 +30,7 @@
 }
 main{
     background-color: rgb(15, 10, 30);
-    height: 100vh;
+    height: 200vh;
 }
 #menu{
     display: flex;
@@ -132,9 +132,9 @@ main{
   vertical-align: middle;
 }
 
-.botonMenu:hover,
-.botonMenu:active {
-  background-color: initial;
+.botonCarrito:hover,
+.botonCarrito:active {
+  background-color: black;
   background-position: 0 0;
   color: #FF4742;
 }
@@ -179,4 +179,9 @@ img{
 .div__carrito__div__productos{
     display: flex;
     flex-direction: column;
+}
+h3{
+    color: orange;
+    padding: 10px;
+    border: 2px orange solid;
 }

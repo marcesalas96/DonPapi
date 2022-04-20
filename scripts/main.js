@@ -84,7 +84,7 @@ function mostrarVariedades(plato,divHijo,productosFiltrados){
     contenedorHijo.setAttribute("id","div__hijo")
     contenedorHijo.innerHTML=`<p> 
     ${plato.id}) ${plato.tipo} ${plato.variedad}, precio: $${plato.precio}
-    </p> <img src=${plato.imagen} class="div__imagen" alt="Imagen de un ${plato.tipo} de ${plato.variedad}">
+    </p> <img src="${plato.imagen}" class="div__imagen" alt="Imagen de un ${plato.tipo} de ${plato.variedad}">
     <div class="div__botones"><button class="botonCarrito" id="botonDiv+${plato.id}">+</button> <button class="botonCarrito" id="botonDiv-${plato.id}">-</button></div> `
     divHijo.append(contenedorHijo)
     const boton = document.getElementById(`botonDiv+${plato.id}`)
@@ -110,42 +110,45 @@ function crearCarrito(){
 function mostrarCarrito(){
     let div = document.querySelector(".div__carrito")
     let divCarrito = document.querySelector(".div__carrito__div")
-    if(divCarrito === null)
-    
-    {
+    if(divCarrito === null){
     divCarrito = document.createElement("div");
     divCarrito.setAttribute("class","div__carrito__div")
-    divCarrito.innerHTML = `<div class="div__carrito__div"><h3>${nombre}, este es tu pedido!</h3></div>`
+    divCarrito.innerHTML = `<h3>${nombre}, tu carrito esta vacio!</h3>`
     div.appendChild(divCarrito)
-    }
-    actualizarCarrito()
+}
+actualizarCarrito()
+mostrarCuentaTotal()
 }
 function actualizarCarrito(){
-    let contenedor = document.getElementsByClassName("div__carrito__div")
-    contenedor.innerHTML=""
+    let contenedor = document.querySelector(".div__carrito__div")
     let prods = miCarrito.productos
     let nuevoContenedor=document.createElement("div")
-    nuevoContenedor.setAttribute("class","div__carrito__div__productos")
-    prods.forEach(listaComidas=>{
-        let nodoLi = document.createElement("div")
-        nodoLi.innerHTML = `${listaComidas.tipo} de ${listaComidas.variedad} - $${listaComidas.precio}`
-        nuevoContenedor.appendChild(nodoLi)
+    contenedor.innerHTML=""
+    prods.forEach(producto=>{
+        let nodoDiv = document.createElement("div")
+        nodoDiv.innerHTML=`${producto.tipo} de ${producto.variedad} $${producto.precio}`
+        nuevoContenedor.appendChild(nodoDiv)
     })
+    contenedor.appendChild(nuevoContenedor)
     miCarrito.guardar()
+    
 }
 function agregarAlCarrito(plato){
     let comidaParaAgregar = comidas.find(el=>el.id==plato.id)
-    console.log(comidaParaAgregar)
+    miCarrito.addProducto(comidaParaAgregar) 
+    actualizarCarrito()
+
 }
-
-
+function mostrarCuentaTotal(){
+    let contenedor = document.querySelector(".div__carrito")
+    contenedor.innerHTML += `<button class="botonCarrito" id="btnCuenta">Mostrar Cuenta</button>`
+    const botonCuenta = document.querySelector("#btnCuenta")
+    botonCuenta.addEventListener("click",()=>{
+        let cuentaTotal = miCarrito.productos.reduce((acc,elemento)=>acc+=elemento.precio,0)
+        contenedor.innerHTML += `<h3>Su cuenta es de $${cuentaTotal}</h3>`
+    })
+}
 
 // Fin de declaracion de functions
 // Inicio del codigo ejecutable
 iniciar()
-// if(!miCarrito){
-//     miCarrito = new Carrito([])
-// }
-// else{
-//     miCarrito=new Carrito(data);
-// }

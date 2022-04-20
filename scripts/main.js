@@ -84,7 +84,7 @@ function mostrarVariedades(plato,divHijo,productosFiltrados){
     contenedorHijo.setAttribute("id","div__hijo")
     contenedorHijo.innerHTML=`<p> 
     ${plato.id}) ${plato.tipo} ${plato.variedad}, precio: $${plato.precio}
-    </p> <img src="${plato.imagen}" class="div__imagen" alt="Imagen de un burrito de ${plato.variedad}">
+    </p> <img src=${plato.imagen} class="div__imagen" alt="Imagen de un ${plato.tipo} de ${plato.variedad}">
     <div class="div__botones"><button class="botonCarrito" id="botonDiv+${plato.id}">+</button> <button class="botonCarrito" id="botonDiv-${plato.id}">-</button></div> `
     divHijo.append(contenedorHijo)
     const boton = document.getElementById(`botonDiv+${plato.id}`)

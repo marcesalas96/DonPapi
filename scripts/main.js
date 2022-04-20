@@ -101,10 +101,9 @@ function crearCarrito(){
     const main = document.querySelector("main")
     const div = document.createElement("div")
     div.setAttribute("id","divCarrito")
-    div.innerHTML = `<div class="div__carrito"><button class="botonMenu" id="botonCarrito">Mostrar Carrito</button></div>`
+    div.innerHTML = `<div class="div__carrito"><h3>${nombre}, este es tu carrito!</h3></div>`
     main.appendChild(div)
-    let boton = document.querySelector("#botonCarrito")
-    boton.addEventListener("click",()=>mostrarCarrito())
+    mostrarCarrito()
     
 }
 function mostrarCarrito(){

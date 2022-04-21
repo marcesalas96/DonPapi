@@ -38,11 +38,7 @@ function crearMenu(productosFiltrados,idCategoria){
         productosFiltrados.forEach((plato)=>{
             mostrarVariedades(plato,divHijo)
         })
-        contador++
-        if (contador>1){
-            cerrarPlatos()
-        }
-        break
+        contador()
         
     }
     while (idCategoria==2){
@@ -50,34 +46,26 @@ function crearMenu(productosFiltrados,idCategoria){
         productosFiltrados.forEach((plato)=>{
             mostrarVariedades(plato,divHijo)
         })
-        contador++
-        if (contador>1){
-            cerrarPlatos()
-        }
-        break
+        contador()
     }
     while (idCategoria==3){
         const divHijo = document.querySelector(".div__comidas")
         productosFiltrados.forEach((plato)=>{
             mostrarVariedades(plato,divHijo)
         })
-        contador++
-        if (contador>1){
-            cerrarPlatos()
-        }
-        break
+        contador()
     }
     while (idCategoria==4){
         const divHijo = document.querySelector(".div__comidas")
         productosFiltrados.forEach((plato)=>{
             mostrarVariedades(plato,divHijo)
         })
-        contador++
-        if (contador>1){
-            cerrarPlatos()
-        }
-        break
+        contador()
     }
+}
+function contador(){
+    contador++
+    contador>1 && cerrarPlatos()
 }
 function mostrarVariedades(plato,divHijo,productosFiltrados){
     const contenedorHijo = document.createElement("div")

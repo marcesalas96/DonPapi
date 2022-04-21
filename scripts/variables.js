@@ -31,13 +31,6 @@ listaComidas.forEach(comida => {
     comidas.push({id: comida.id, tipo: comida.tipo, variedad: comida.variedad, precio: comida.precio })
 });
 const data = JSON.parse(localStorage.getItem("MI_CARRITO"))
-console.log(data)
 let miCarrito = new Carrito([])
-if (!data){
-    miCarrito = new Carrito([])
-}
-else{
-    miCarrito = new Carrito(data)
-}
-console.log(miCarrito)
+!data ? miCarrito = new Carrito([]) : miCarrito= new Carrito(data)
 let cuentaTotal = miCarrito.productos.reduce((acc,elemento)=>acc+=elemento.precio,0)

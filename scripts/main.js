@@ -34,47 +34,44 @@ function mostrarPlatos(idCategoria){
 }
 function crearMenu(productosFiltrados,idCategoria){
     while (idCategoria==1){
-        const divHijo = document.querySelector(".div__comidas")
         productosFiltrados.forEach((plato)=>{
-            mostrarVariedades(plato,divHijo)
+            mostrarVariedades(plato)
         })
-        contador()
+        contadores()
         
     }
     while (idCategoria==2){
-        const divHijo = document.querySelector(".div__comidas")
         productosFiltrados.forEach((plato)=>{
-            mostrarVariedades(plato,divHijo)
+            mostrarVariedades(plato)
         })
-        contador()
+        contadores()
     }
     while (idCategoria==3){
-        const divHijo = document.querySelector(".div__comidas")
         productosFiltrados.forEach((plato)=>{
-            mostrarVariedades(plato,divHijo)
+            mostrarVariedades(plato)
         })
-        contador()
+        contadores()
     }
     while (idCategoria==4){
-        const divHijo = document.querySelector(".div__comidas")
         productosFiltrados.forEach((plato)=>{
-            mostrarVariedades(plato,divHijo)
+            mostrarVariedades(plato)
         })
-        contador()
+        contadores()
     }
 }
-function contador(){
+function contadores(){
     contador++
     contador>1 && cerrarPlatos()
 }
-function mostrarVariedades(plato,divHijo,productosFiltrados){
+function mostrarVariedades(plato){
+    const divHijo = document.getElementsByClassName("div__comidas")
     const contenedorHijo = document.createElement("div")
     contenedorHijo.setAttribute("id","div__hijo")
     contenedorHijo.innerHTML=`<p> 
     ${plato.id}) ${plato.tipo} ${plato.variedad}, precio: $${plato.precio}
     </p> <img src="${plato.imagen}" class="div__imagen" alt="Imagen de un ${plato.tipo} de ${plato.variedad}">
     <div class="div__botones"><button class="botonCarrito" id="botonDiv+${plato.id}">+</button> <button class="botonCarrito" id="botonDiv-${plato.id}">-</button></div> `
-    divHijo.append(contenedorHijo)
+    divHijo.innerHTML = `${contenedorHijo}`
     const boton = document.getElementById(`botonDiv+${plato.id}`)
     boton.addEventListener("click",()=>agregarAlCarrito(plato))
     const botonResta = document.getElementById(`botonDiv-${plato.id}`)

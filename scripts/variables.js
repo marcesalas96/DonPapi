@@ -18,7 +18,6 @@ const postreVolcan = new Postres(12,"Postre","Volcan de chocolate",450,3, "../me
 const bebidaCoca = new Bebidas(13,"Bebida","Coca-Cola",150,4, "../media/cocaCola.jpg")
 const bebidaTrago = new Bebidas(14,"Bebida","Margarita",300,4, "../media/margarita.jpg")
 // Declaracion variables
-
 let contador = 0
 let comidas=[]
 let comidaParaAgregar = []

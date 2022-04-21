@@ -126,16 +126,13 @@ function actualizarCarrito(){
 function agregarAlCarrito(plato){
     let comidaParaAgregar = comidas.find(el=>el.id==plato.id)
     miCarrito.addProducto(comidaParaAgregar) 
-    console.log(miCarrito.productos.indexOf(comidaParaAgregar))
     actualizarCarrito()
 
 }
 function sacarDelCarrito(plato){
     let comidaParaSacar = comidas.find(el=>el.id==plato.id)
     let index = miCarrito.productos.indexOf(comidaParaSacar)
-    console.log(index)
     miCarrito.removeProducto(index)
-    console.log(miCarrito)
     
     actualizarCarrito()
 }

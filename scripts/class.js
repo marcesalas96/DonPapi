@@ -58,3 +58,12 @@ class Carrito{
         this.productos.splice(index,1)
     }
 }
+class Nombre{
+    constructor(nombre){
+        this.nombre=nombre
+    }
+    guardarNombre(nombre){
+        localStorage.setItem("NOMBRE", JSON.stringify(this.nombre))
+    }
+    
+}

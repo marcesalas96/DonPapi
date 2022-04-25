@@ -6,7 +6,7 @@ function iniciar(){
 }    
 function personalizarNombre(){
 let titulo=document.getElementById("titulo")
-titulo.innerText = `Bienvenid@, ${nombre}!`
+titulo.innerText = `Bienvenid@, ${nombreData}!`
 
 }
 function crearBotones(){
@@ -72,18 +72,15 @@ function crearMenu(productosFiltrados,idCategoria){
     }
 }
 function mostrarVariedades(plato,divHijo){
-    console.log(divHijo)
     const contenedorHijo = document.createElement("div")
     contenedorHijo.setAttribute("id","div__hijo")
     contenedorHijo.innerHTML=`<p> 
     ${plato.tipo} ${plato.variedad}, precio: $${plato.precio}
     </p> <img src="${plato.imagen}" class="div__imagen" alt="Imagen de un ${plato.tipo} de ${plato.variedad}">
-    <div class="div__botones"><button class="botonCarrito" id="botonDiv+${plato.id}">+</button> <button class="botonCarrito" id="botonDiv-${plato.id}">-</button></div> `
+    <div class="div__botones"><button class="botonCarrito" id="botonDiv+${plato.id}">Agregar al carrito</button> </div> `
     divHijo.appendChild(contenedorHijo)
     const boton = document.getElementById(`botonDiv+${plato.id}`)
     boton.addEventListener("click",()=>agregarAlCarrito(plato))
-    const botonResta = document.getElementById(`botonDiv-${plato.id}`)
-    botonResta.addEventListener("click",()=>sacarDelCarrito(plato))
 }
 function cerrarPlatos(){
     let div = document.querySelector("#listaMenu");
@@ -96,7 +93,7 @@ function crearCarrito(){
     const main = document.querySelector("main")
     const div = document.createElement("div")
     div.setAttribute("id","divCarrito")
-    div.innerHTML = `<div class="div__carrito"><h3>${nombre}, este es tu carrito!</h3></div>`
+    div.innerHTML = `<div class="div__carrito"><h3>${nombreData}, este es tu carrito!</h3></div>`
     main.appendChild(div)
     mostrarCarrito()
     
@@ -107,21 +104,25 @@ function mostrarCarrito(){
     if(divCarrito === null){
     divCarrito = document.createElement("div");
     divCarrito.setAttribute("class","div__carrito__div")
-    divCarrito.innerHTML = `<h3>${nombre}, tu carrito esta vacio!</h3>`
+    divCarrito.innerHTML = `<h3>${nombreData}, tu carrito esta vacio!</h3>`
     div.appendChild(divCarrito)
 }
 actualizarCarrito()
 mostrarCuentaTotal()
 }
-function actualizarCarrito(){
+function actualizarCarrito(plato){
     let contenedor = document.querySelector(".div__carrito__div")
     let prods = miCarrito.productos
     let nuevoContenedor=document.createElement("div")
+    nuevoContenedor.setAttribute("class","div__carrito__div__productos")
     contenedor.innerHTML=""
     prods.forEach(producto=>{
         let nodoDiv = document.createElement("div")
-        nodoDiv.innerHTML=`${producto.tipo} de ${producto.variedad} $${producto.precio}`
+        nodoDiv.setAttribute("class","nodoDiv")
+        nodoDiv.innerHTML=`${producto.tipo} de ${producto.variedad} $${producto.precio} <div class="div__carrito__div__productos__botones"><button class="botonCarrito" id="botonDiv-">-</button></div>`
         nuevoContenedor.appendChild(nodoDiv)
+        const botonResta = document.querySelector(`#botonDiv-`)
+        // botonResta.addEventListener("click",()=>sacarDelCarrito(plato))
     })
     contenedor.appendChild(nuevoContenedor)
     miCarrito.guardar()
@@ -131,7 +132,29 @@ function actualizarCarrito(){
 function agregarAlCarrito(plato){
     let comidaParaAgregar = comidas.find(el=>el.id==plato.id)
     miCarrito.addProducto(comidaParaAgregar) 
-    actualizarCarrito()
+    cuentaParcial+= plato.precio
+        console.log(cuentaParcial)
+        Toastify({
+            text:"Producto agregado al carrito con exito!",
+            duration: 3000,
+            gravity: "bottom",
+            style: 
+            {
+                background: "orange",
+                color: "black"
+            }
+        }).showToast()
+        Toastify({
+            text:`Su cuenta parcial es: $${cuentaParcial}`,
+            duration: 3000,
+            gravity: "bottom",
+            style: 
+            {
+                background: "orange",
+                color: "black"
+            }
+        }).showToast()
+    actualizarCarrito(plato)
 
 }
 function sacarDelCarrito(plato){
@@ -139,7 +162,7 @@ function sacarDelCarrito(plato){
     let index = miCarrito.productos.indexOf(comidaParaSacar)
     miCarrito.removeProducto(index)
     
-    actualizarCarrito()
+    actualizarCarrito(plato)
 }
 function mostrarCuentaTotal(){
     let contenedor = document.querySelector(".div__carrito")

@@ -21,7 +21,19 @@ const bebidaTrago = new Bebidas(14,"Bebida","Margarita",300,4, "../media/margari
 let contador = 0
 let comidas=[]
 let comidaParaAgregar = []
-const nombre=prompt("Ingresa tu nombre!")
+let nombre = new Nombre(null)
+let nombreData = JSON.parse(localStorage.getItem("NOMBRE"))
+console.log(nombreData)
+if (!nombreData){
+    const preguntoNombre = prompt("Ingresa tu nombre!")
+    nombre = new Nombre(preguntoNombre)
+    console.log(nombre)
+    nombre.guardarNombre(preguntoNombre)
+}
+else{
+    nombre = new Nombre(nombreData)
+}
+nombreData = JSON.parse(localStorage.getItem("NOMBRE"))
 const menu = []
 menu.push(variedadBurrito,variedadTaco,variedadPostre,variedadBebida)
 const listaComidas = []
@@ -32,4 +44,6 @@ listaComidas.forEach(comida => {
 const data = JSON.parse(localStorage.getItem("MI_CARRITO"))
 let miCarrito = new Carrito([])
 !data ? miCarrito = new Carrito([]) : miCarrito= new Carrito(data)
+let cuentaCarrito = miCarrito.productos.reduce((acc,elemento)=>acc+=elemento.precio,0)
+let cuentaParcial = cuentaCarrito
 let cuentaTotal = miCarrito.productos.reduce((acc,elemento)=>acc+=elemento.precio,0)

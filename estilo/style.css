@@ -89,6 +89,11 @@ main{
     align-items: center;
     gap: 30px;
 }
+.div__imagen{
+    border-radius: 3px;
+    background-color: rgba(0, 0, 0, 0.8);
+    padding: 2px;
+}
 #div__hijo{
     color: black;
     display: flex;

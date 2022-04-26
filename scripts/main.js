@@ -110,7 +110,7 @@ function mostrarCarrito(){
 actualizarCarrito()
 mostrarCuentaTotal()
 }
-function actualizarCarrito(plato){
+function actualizarCarrito(plato,producto){
     let contenedor = document.querySelector(".div__carrito__div")
     let prods = miCarrito.productos
     let nuevoContenedor=document.createElement("div")
@@ -119,12 +119,12 @@ function actualizarCarrito(plato){
     prods.forEach(producto=>{
         let nodoDiv = document.createElement("div")
         nodoDiv.setAttribute("class","nodoDiv")
-        nodoDiv.innerHTML=`${producto.tipo} de ${producto.variedad} $${producto.precio} <div class="div__carrito__div__productos__botones"><button class="botonCarrito" id="botonDiv-">-</button></div>`
+        nodoDiv.innerHTML=`${producto.tipo} de ${producto.variedad} $${producto.precio} <div class="div__carrito__div__productos__botones"><button class="botonCarrito" id="botonDiv-${producto.id}">-</button></div>`
         nuevoContenedor.appendChild(nodoDiv)
-        const botonResta = document.querySelector(`#botonDiv-`)
-        // botonResta.addEventListener("click",()=>sacarDelCarrito(plato))
+        contenedor.appendChild(nuevoContenedor)
+        const botonResta = document.getElementById(`botonDiv-${producto.id}`)
+        botonResta.addEventListener("click",()=>sacarDelCarrito(producto))
     })
-    contenedor.appendChild(nuevoContenedor)
     miCarrito.guardar()
     
 }
@@ -157,20 +157,48 @@ function agregarAlCarrito(plato){
     actualizarCarrito(plato)
 
 }
-function sacarDelCarrito(plato){
-    let comidaParaSacar = comidas.find(el=>el.id==plato.id)
+function sacarDelCarrito(producto){
+    let comidaParaSacar = comidas.find(el=>el.id==producto.id)
     let index = miCarrito.productos.indexOf(comidaParaSacar)
+    console.log(index)
     miCarrito.removeProducto(index)
-    
-    actualizarCarrito(plato)
+    cuentaParcial-=producto.precio
+    console.log(cuentaParcial)
+    Toastify({
+        text:"Eliminaste este producto exitosamente!",
+        duration: 3000,
+        gravity: "bottom",
+        style: 
+        {
+            background: "orange",
+            color: "black"
+        }
+    }).showToast()
+    Toastify({
+        text:`Su cuenta parcial es: $${cuentaParcial}`,
+        duration: 3000,
+        gravity: "bottom",
+        style: 
+        {
+            background: "orange",
+            color: "black"
+        }
+    }).showToast()
+    actualizarCarrito(producto)
 }
 function mostrarCuentaTotal(){
     let contenedor = document.querySelector(".div__carrito")
     contenedor.innerHTML += `<button class="botonCarrito" id="btnCuenta">Mostrar Cuenta</button>`
     const botonCuenta = document.querySelector("#btnCuenta")
     botonCuenta.addEventListener("click",()=>{
-        let cuentaTotal = miCarrito.productos.reduce((acc,elemento)=>acc+=elemento.precio,0)
-        contenedor.innerHTML += `<h3>Su cuenta es de $${cuentaTotal}</h3>`
+        let cuentaTotal = cuentaParcial
+        swal({
+            title: `${nombreData}, gracias por elegirnos!`,
+            text: `El total es: $${cuentaTotal}`,
+            buttons: ["CANCELAR", "PAGAR"]
+        }).then((aPagar)=>{
+            aPagar ? swal("Pagaste!", {icon: "success", }) : swal ("Cancelaste tu pedido", {icon: "error", })
+        })
     })
 }
 

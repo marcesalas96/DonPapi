@@ -93,6 +93,7 @@ main{
     border-radius: 3px;
     background-color: rgba(0, 0, 0, 0.8);
     padding: 2px;
+    box-shadow: 0px 15px 25px
 }
 #div__hijo{
     color: black;
@@ -151,12 +152,28 @@ img{
     width: 250px;
     height: 250px;
     object-fit: cover;
+    ;
 }
 #divCarrito{
     display: flex;
     justify-content: center;
+    flex-direction: column;
     text-align: center;
-    padding-top: 40px;
+    gap: 2rem;
+    max-width: 30vw;
+    max-height: 100vh;
+    position:absolute ;
+    z-index: 100;
+    left: 77%;
+    overflow: scroll;
+    bottom: 45%;
+    opacity: 1;
+    pointer-events: all;
+    background-color: rgba(255, 155, 0, 0.8);
+}
+.activo{
+    opacity: 1 !important;
+    pointer-events: all !important;
 }
 #botonMenu{
     width: 150px;
@@ -200,10 +217,38 @@ img{
     display: flex;
     justify-content: flex-end;
     align-items: center;
-
+    gap: 1rem;
+}
+.div__carrito__div__productos__botones > input{
+    width: 40px;
 }
 h3{
-    color: orange;
+    color: black;
     padding: 10px;
-    border: 2px orange solid;
+}
+.imagen__carrito{
+    width: 100px;
+    height: 100px;
+    box-shadow: 0px 15px 25px;
+}
+.img__carrito{
+    width: 70px;
+    height: 70px;
+}
+#btnCarrito{
+    background-color: orange;
+    position: relative;
+    top: 57px;
+    box-shadow: 0px 5px 5px;
+    border: 1px solid black;
+}
+#btnCarrito:hover{
+    scale: 1.1;
+}
+.div__header__div{
+    display: flex;
+    flex-direction: column;
+    height: 250px;
+    align-items: center;
+    justify-content: center;
 }

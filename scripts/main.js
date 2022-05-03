@@ -3,6 +3,7 @@ function iniciar(){
         personalizarNombre()
         crearBotones()
         cerrarPlatos()
+        aparecerCarrito()
 }    
 function personalizarNombre(){
 let titulo=document.getElementById("titulo")
@@ -20,7 +21,14 @@ function crearBotones(){
     })
     crearCarrito()
 }
+function aparecerCarrito(){
+    const btnCarrito = document.getElementById("btnCarrito")
+    btnCarrito.addEventListener("click", ()=> {
+        let div = document.querySelector("#divCarrito")
+        div.setAttribute("class","activo")
+    })
 
+}
 
 function mostrarPlatos(idCategoria){
     const productosFiltrados = listaComidas.filter(comida=> comida.categoria === idCategoria)
@@ -75,7 +83,7 @@ function mostrarVariedades(plato,divHijo){
     const contenedorHijo = document.createElement("div")
     contenedorHijo.setAttribute("id","div__hijo")
     contenedorHijo.innerHTML=`<p> 
-    ${plato.tipo} ${plato.variedad}, precio: $${plato.precio}
+    ${plato.tipo} ${plato.variedad}, precio: $${plato.precio} 
     </p> <img src="${plato.imagen}" class="div__imagen" alt="Imagen de un ${plato.tipo} de ${plato.variedad}">
     <div class="div__botones"><button class="botonCarrito" id="botonDiv+${plato.id}">Agregar al carrito</button> </div> `
     divHijo.appendChild(contenedorHijo)
@@ -93,8 +101,10 @@ function crearCarrito(){
     const main = document.querySelector("main")
     const div = document.createElement("div")
     div.setAttribute("id","divCarrito")
-    div.innerHTML = `<div class="div__carrito"><h3>${nombreData}, este es tu carrito!</h3></div>`
+    div.innerHTML = `<div class="div__carrito"><h3>${nombreData}, este es tu carrito!</h3><div><button class="botonCarrito" id="btnVaciarCarrito">VACIAR CARRITO</button></div></div> `
     main.appendChild(div)
+    const btnVaciarCarrito = document.getElementById("btnVaciarCarrito")
+    btnVaciarCarrito.addEventListener("click",()=>console.log("click"))
     mostrarCarrito()
     
 }
@@ -112,18 +122,22 @@ mostrarCuentaTotal()
 }
 function actualizarCarrito(plato,producto){
     let contenedor = document.querySelector(".div__carrito__div")
-    let prods = miCarrito.productos
+    var prods = miCarrito.productos
     let nuevoContenedor=document.createElement("div")
     nuevoContenedor.setAttribute("class","div__carrito__div__productos")
     contenedor.innerHTML=""
     prods.forEach(producto=>{
         let nodoDiv = document.createElement("div")
         nodoDiv.setAttribute("class","nodoDiv")
-        nodoDiv.innerHTML=`${producto.tipo} de ${producto.variedad} $${producto.precio} <div class="div__carrito__div__productos__botones"><button class="botonCarrito" id="botonDiv-${producto.id}">-</button></div>`
+        nodoDiv.innerHTML=`<img src="${producto.imagen}" class ="imagen__carrito"> ${producto.tipo} de ${producto.variedad} <div class="div__carrito__div__productos__botones"><input type="number" value=${producto.cantidad}> </input><button class="botonCarrito" id="botonDiv-${producto.id}">-</button></div>`
         nuevoContenedor.appendChild(nodoDiv)
         contenedor.appendChild(nuevoContenedor)
-        const botonResta = document.getElementById(`botonDiv-${producto.id}`)
-        botonResta.addEventListener("click",()=>sacarDelCarrito(producto))
+        const nodoDivBtn = document.querySelector(".div__carrito__div__productos__botones");
+        const botonResta = document.querySelectorAll(`#botonDiv-${producto.id}`);
+        botonResta.forEach(boton => {
+            boton.addEventListener("click", () => sacarDelCarrito(producto))
+
+        })
     })
     miCarrito.guardar()
     
@@ -133,7 +147,6 @@ function agregarAlCarrito(plato){
     let comidaParaAgregar = comidas.find(el=>el.id==plato.id)
     miCarrito.addProducto(comidaParaAgregar) 
     cuentaParcial+= plato.precio
-        console.log(cuentaParcial)
         Toastify({
             text:"Producto agregado al carrito con exito!",
             duration: 3000,
@@ -160,10 +173,8 @@ function agregarAlCarrito(plato){
 function sacarDelCarrito(producto){
     let comidaParaSacar = comidas.find(el=>el.id==producto.id)
     let index = miCarrito.productos.indexOf(comidaParaSacar)
-    console.log(index)
     miCarrito.removeProducto(index)
     cuentaParcial-=producto.precio
-    console.log(cuentaParcial)
     Toastify({
         text:"Eliminaste este producto exitosamente!",
         duration: 3000,
@@ -193,13 +204,44 @@ function mostrarCuentaTotal(){
     botonCuenta.addEventListener("click",()=>{
         let cuentaTotal = cuentaParcial
         swal({
+            icon: "warning",
             title: `${nombreData}, gracias por elegirnos!`,
             text: `El total es: $${cuentaTotal}`,
             buttons: ["CANCELAR", "PAGAR"]
         }).then((aPagar)=>{
-            aPagar ? swal("Pagaste!", {icon: "success", }) : swal ("Cancelaste tu pedido", {icon: "error", })
+            aPagar ? eliminarCarrito() : swal ("Pago cancelado!", {icon: "error", })
         })
     })
+}
+function eliminarCarrito(){
+    let eliminarDivCarrito= document.querySelectorAll(".nodoDiv")
+    eliminarDivCarrito.forEach(nodo => {
+        nodo.remove()
+    })
+    miCarrito.productos.splice(0,miCarrito.productos.length)
+    cuentaParcial= 0
+    localStorage.clear()
+    swal("Pagaste!", {icon: "success", })
+}
+function vaciarCarrito(){
+    swal({
+        icon: "warning",
+            title: `${nombreData}, seguro que queres vaciar tu carrito?`,
+            buttons: ["CANCELAR", "VACIAR"]
+    }).then((vaciar)=>{
+        if (vaciar){
+            let eliminarDivCarrito= document.querySelectorAll(".nodoDiv")
+            eliminarDivCarrito.forEach(nodo => {
+                nodo.remove()
+            })
+            miCarrito.productos.splice(0,miCarrito.productos.length)
+            cuentaParcial= 0
+            localStorage.clear()
+            swal("Eliminaste tu carrito", {icon: "success", })
+        }
+        else{
+            swal("Cancelaste la operacion!",{icon: "error",})
+        }})
 }
 
 // Fin de declaracion de functions

@@ -5,43 +5,52 @@ class Variedad{
     }
 }
 class Burritos{
-    constructor (id, tipo, variedad, precio, categoria,imagen){ 
+    constructor (id, tipo, variedad, precio, categoria,imagen, cantidad,calorias){ 
         this.id=id
         this.tipo=tipo
         this.variedad=variedad
         this.precio=precio
         this.categoria=categoria
         this.imagen=imagen
+        this.cantidad = cantidad
+        this.calorias = calorias
     }
 }
 class Tacos{
-    constructor (id, tipo, variedad, precio, categoria,imagen){ 
+    constructor (id, tipo, variedad, precio, categoria,imagen, cantidad,calorias){ 
         this.id=id
         this.tipo=tipo
         this.variedad=variedad
         this.precio=precio
         this.categoria=categoria
         this.imagen=imagen
+        this.cantidad = cantidad
+        this.calorias = calorias
     }
 }
 class Postres{
-    constructor (id, tipo, variedad, precio, categoria, imagen){ 
+    constructor (id, tipo, variedad, precio, categoria, imagen, cantidad,calorias){ 
         this.id=id
         this.tipo=tipo
         this.variedad=variedad
         this.precio=precio
         this.categoria=categoria
         this.imagen=imagen
+        this.cantidad = cantidad
+        this.calorias = calorias
     }
 }
 class Bebidas{
-    constructor (id, tipo, variedad, precio, categoria, imagen){ 
+    constructor (id, tipo, variedad, precio, categoria, imagen, cantidad,calorias){ 
         this.id=id
         this.tipo=tipo
         this.variedad=variedad
         this.precio=precio
         this.categoria=categoria
         this.imagen=imagen
+        this.cantidad = cantidad
+        this.calorias = calorias
+
     }
 }
 class Carrito{

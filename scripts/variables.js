@@ -29,17 +29,17 @@ const options1 = {
         'X-RapidAPI-Key': '52b86ff42cmsh87019ee0724af27p13ec6ajsn9f3ff52883b9'
     }
 };
-
+function recorrer(array){
+    
+    for(element of array){
+        caloriasTacos.push(element.energ_kcal)
+    }
+}
+console.log(caloriasTacos)
 fetch('https://food-calorie-data-search.p.rapidapi.com/api/search?keyword=%20taco', options1)
     .then(response => response.json())
-    .then(response => {for (item of response){
-        caloriasTacos.push(item)
-    }})
+    .then(data => recorrer(data))
     .catch(err => console.error(err));
-    console.log(caloriasTacos)
-    for (elemento of caloriasTacos){
-        console.log(elemento.id)
-    }
 
     const options2 = {
     method: 'GET',
@@ -90,7 +90,7 @@ const variedadBurrito = new Variedad(1, "Burritos")
 const variedadTaco = new Variedad(2, "Tacos")
 const variedadPostre = new Variedad(3, "Postres")
 const variedadBebida = new Variedad(4, "Bebidas")
-const burritoCarne = new Burritos(1, "Burrito", "Carne", 650, 1, "media/burrito.jpg", 1, `${caloriasBurritos[0]}`)
+const burritoCarne = new Burritos(1, "Burrito", "Carne", 650, 1, "media/burrito.jpg", 1, ``)
 const burritoCerdo = new Burritos(2, "Burrito", "Cerdo", 570, 1, "media/burritoCerdo.jpg", 1)
 const burritoPollo = new Burritos(3, "Burrito", "Pollo", 500, 1, "media/burritoPollo.jpg", 1)
 const burritoVeggie = new Burritos(4, "Burrito", "Veggie", 520, 1, "media/burritoVeggie.jpg", 1)

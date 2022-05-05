@@ -14,9 +14,10 @@ function crearBotones(){
     const btnMenu = document.querySelector("#menu")
     menu.forEach((categoria)=>{
         const miBoton = document.createElement("button");
-        miBoton.setAttribute("class", "botonMenu");
+        miBoton.setAttribute("class", `botonMenu`);
+        miBoton.setAttribute("id",`btnMenu${categoria.id}`)
         miBoton.innerHTML=categoria.nombre;
-        miBoton.addEventListener("click", ()=> mostrarPlatos(categoria.id))
+        miBoton.addEventListener("click", ()=>  mostrarPlatos(categoria.id))
         btnMenu.appendChild(miBoton)
     })
     crearCarrito()
@@ -242,6 +243,42 @@ function vaciarCarrito(){
         else{
             swal("Cancelaste la operacion!",{icon: "error",})
         }})
+}
+function crearBebidas(data){
+    const divPadre = document.querySelector("#listaMenu")
+    const btnTragos = document.createElement("btn")
+    btnTragos.setAttribute("class","botonMenu"), ("id","btnTragos")
+    btnTragos.innerHTML = "CARTA DE TRAGOS"
+    divPadre.appendChild(btnTragos)
+    btnTragos.addEventListener("click", () => mostrarBebidas(data))
+
+
+}
+function mostrarBebidas(data){
+    const divPadre = document.createElement("div")
+    divPadre.setAttribute("id","divFetch")
+    const main = document.querySelector("main")
+    divPadre.innerHTML = `<div class="div__headerFetch"><h2>Nuestra carta de tragos solo puede ser consumida en nuestro local!</h2><button class = "btnCerrar">X</button></div>`
+    main.appendChild(divPadre)
+    const btnCerrar = document.querySelector(".btnCerrar")
+    btnCerrar.addEventListener("click",()=> cerrarPlatosFetch())
+    const divHijo = document.createElement("div")
+    divHijo.setAttribute("class", "divFetch__hijo")
+    divPadre.appendChild(divHijo)
+    data.drinks.forEach((trago)=>{
+        const divFetchHijo = document.createElement("div")
+        divFetchHijo.setAttribute("id","div__hijo__fetch")
+        divFetchHijo.innerHTML = `
+        <h3>${trago.strDrink}</h3>
+        <div class="div__imagen"><img alt="Imagen de un trago ${trago.strDrink}" src ="${trago.strDrinkThumb}"></div>
+        `
+        divHijo.appendChild(divFetchHijo)
+    })
+}
+function cerrarPlatosFetch(){
+    const main = document.querySelector("main")
+    const div = document.querySelector("#divFetch")
+    main.removeChild(div)
 }
 
 // Fin de declaracion de functions

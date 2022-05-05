@@ -21,69 +21,6 @@ const caloriasPostres = []
 const caloriasBebidas = []
 
 
-// ---------INCLUYENDO FETCH---------
-const options1 = {
-    method: 'GET',
-    headers: {
-        'X-RapidAPI-Host': 'food-calorie-data-search.p.rapidapi.com',
-        'X-RapidAPI-Key': '52b86ff42cmsh87019ee0724af27p13ec6ajsn9f3ff52883b9'
-    }
-};
-function recorrer(array){
-    
-    for(element of array){
-        caloriasTacos.push(element.energ_kcal)
-    }
-}
-console.log(caloriasTacos)
-fetch('https://food-calorie-data-search.p.rapidapi.com/api/search?keyword=%20taco', options1)
-    .then(response => response.json())
-    .then(data => recorrer(data))
-    .catch(err => console.error(err));
-
-    const options2 = {
-    method: 'GET',
-    headers: {
-        'X-RapidAPI-Host': 'food-calorie-data-search.p.rapidapi.com',
-        'X-RapidAPI-Key': '52b86ff42cmsh87019ee0724af27p13ec6ajsn9f3ff52883b9'
-    }
-};
-fetch('https://food-calorie-data-search.p.rapidapi.com/api/search?keyword=%20burrito', options2)
-    .then(response => response.json())
-    .then(response => response.forEach((item) => {
-        caloriasBurritos.push(item.energ_kcal + " calorias")
-    }))
-    .catch(err => console.error(err));
-
-const options3 = {
-    method: 'GET',
-    headers: {
-        'X-RapidAPI-Host': 'food-calorie-data-search.p.rapidapi.com',
-        'X-RapidAPI-Key': '52b86ff42cmsh87019ee0724af27p13ec6ajsn9f3ff52883b9'
-    }
-};
-
-fetch('https://food-calorie-data-search.p.rapidapi.com/api/search?keyword=brownie', options3)
-    .then(response => response.json())
-    .then(response => response.forEach((item) => {
-        caloriasPostres.push(item.energ_kcal + " calorias")
-    }))
-    .catch(err => console.error(err));
-
-const options4 = {
-    method: 'GET',
-    headers: {
-        'X-RapidAPI-Host': 'food-calorie-data-search.p.rapidapi.com',
-        'X-RapidAPI-Key': '52b86ff42cmsh87019ee0724af27p13ec6ajsn9f3ff52883b9'
-    }
-};
-
-fetch('https://food-calorie-data-search.p.rapidapi.com/api/search?keyword=coca-cola', options4)
-    .then(response => response.json())
-    .then(response => response.forEach((item) => {
-        caloriasBebidas.push(item.energ_kcal + " calorias")
-    }))
-    .catch(err => console.error(err));
 
 //Construyendo Objetos 
 const variedadBurrito = new Variedad(1, "Burritos")
@@ -118,3 +55,9 @@ listaComidas.forEach(comida => {
     comidas.push({ id: comida.id, tipo: comida.tipo, variedad: comida.variedad, precio: comida.precio, imagen: comida.imagen, cantidad: comida.cantidad })
 });
 
+fetch('https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=Tequila')
+.then((response) => response.json())
+.then((data) => crearBebidas(data))
+
+
+        

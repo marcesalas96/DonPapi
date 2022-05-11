@@ -14,6 +14,9 @@ class Burritos{
         this.imagen=imagen
         this.cantidad = cantidad
     }
+    cambiarCantidad(valor){
+        this.cantidad= valor
+    }
 }
 class Tacos{
     constructor (id, tipo, variedad, precio, categoria,imagen, cantidad){ 
@@ -24,6 +27,9 @@ class Tacos{
         this.categoria=categoria
         this.imagen=imagen
         this.cantidad = cantidad
+    }
+    cambiarCantidad(){
+        this.cantidad++
     }
 }
 class Postres{
@@ -36,6 +42,9 @@ class Postres{
         this.imagen=imagen
         this.cantidad = cantidad
     }
+    cambiarCantidad(){
+        this.cantidad++
+    }
 }
 class Bebidas{
     constructor (id, tipo, variedad, precio, categoria, imagen, cantidad){ 
@@ -46,6 +55,9 @@ class Bebidas{
         this.categoria=categoria
         this.imagen=imagen
         this.cantidad = cantidad
+    }
+    cambiarCantidad(){
+        this.cantidad++
     }
 }
 class Carrito{

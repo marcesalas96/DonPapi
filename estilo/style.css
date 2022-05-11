@@ -44,7 +44,7 @@ main{
     align-items: center;
     gap: 2rem;
 }
-.botonMenu{
+.botonMenu,.btnCerrar2{
   background: orange;
   border: 1px solid #FF4742;
   border-radius: 6px;
@@ -165,23 +165,43 @@ img{
 #divCarrito{
     display: flex;
     justify-content: center;
+    align-items: center;
     flex-direction: column;
     text-align: center;
     gap: 2rem;
-    max-width: 30vw;
-    max-height: 100vh;
-    position:absolute ;
+    width: 100vw;
+    height: 100vh;
     z-index: 100;
-    left: 77%;
-    overflow: scroll;
-    bottom: 45%;
     opacity: 0;
     pointer-events: none;
-    background-color: rgba(255, 155, 0, 0.8);
+    background-color: rgba(0, 0, 0, 0.8);
+    position: absolute;
+    bottom: 1px;
+    overflow: scroll;
+    position: fixed;
+
 }
 .activo{
     opacity: 1 !important;
     pointer-events: all !important;
+}
+.divCarrito1{
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    padding: 1rem;
+
+}
+.divCarrito1 div{
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    height: 30px;
+    flex-basis: 1;
+}
+.divCarrito1 h3{
+    width: 100%;
+    flex-basis: 2;
 }
 #botonMenu{
     width: 150px;
@@ -192,6 +212,10 @@ img{
     gap: 2rem;
     justify-content: center;
     align-items: center;
+    background-color: rgba(255, 155, 0, 0.7);
+    width: 50%;
+    margin: auto;
+    height: auto;
 }
 .div__carrito__div{
     color: black;
@@ -306,13 +330,13 @@ h3{
 }
 
 .btnCerrar:hover,
-.btnCerrar:active {
+.btnCerrar:active,.btnCerrar2:hover,.btnCerrar2:active {
   background-color: black;
   background-position: 0 0;
   color: #FF4742;
 }
 
-.btnCerrar:active {
+.btnCerrar:active,.btnCerrar2:active {
   opacity: .5;
 }
 .divFetch__hijo{
@@ -327,4 +351,7 @@ h3{
 }
 #div__hijo__fetch{
     text-align: center;
+}
+.div__carrito1{
+    display: flex;
 }

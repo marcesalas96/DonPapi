@@ -1,7 +1,7 @@
 let nombreData = JSON.parse(localStorage.getItem("NOMBRE"))
 const data = JSON.parse(localStorage.getItem("MI_CARRITO"))
-let miCarrito = new Carrito([])
 !data ? miCarrito = new Carrito([]) : miCarrito = new Carrito(data)
+console.log(data)
 let cuentaCarrito = miCarrito.productos.reduce((acc, elemento) => acc += elemento.precio, 0)
 let cuentaParcial = cuentaCarrito
 
@@ -34,7 +34,6 @@ const bebidaTrago = new Bebidas(14, "Bebida", "Margarita", 300, 4, "media/margar
 
 
 // Declaracion variables
-let cantidad = 1
 let contador = 0
 let comidas = []
 let comidaParaAgregar = []
@@ -49,3 +48,20 @@ listaComidas.forEach(comida => {
 fetch('https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=Tequila')
 .then((response) => response.json())
 .then((data) => crearBebidas(data))
+
+const ComidaObjeto = {
+    1: burritoCarne,
+    2:burritoCerdo,
+    3:burritoPollo,
+    4:burritoVeggie,
+    5:tacoPastor,
+    6:tacoCerdo,
+    7:tacoMixto,
+    8:tacoVeggie,
+    9:postreBanana,
+    10:postreBrownie,
+    11:postreHelado,
+    12:postreVolcan,
+    13:bebidaCoca,
+    14:bebidaTrago
+}

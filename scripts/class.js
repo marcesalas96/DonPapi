@@ -14,8 +14,11 @@ class Burritos{
         this.imagen=imagen
         this.cantidad = cantidad
     }
-    cambiarCantidad(valor){
-        this.cantidad= valor
+    aumentarCantidad(){
+        this.cantidad+=1
+    }
+    mermarCantidad(){
+        this.cantidad-=1
     }
 }
 class Tacos{
@@ -28,8 +31,11 @@ class Tacos{
         this.imagen=imagen
         this.cantidad = cantidad
     }
-    cambiarCantidad(){
-        this.cantidad++
+    aumentarCantidad(){
+        this.cantidad+=1
+    }
+    mermarCantidad(){
+        this.cantidad-=1
     }
 }
 class Postres{
@@ -42,8 +48,11 @@ class Postres{
         this.imagen=imagen
         this.cantidad = cantidad
     }
-    cambiarCantidad(){
-        this.cantidad++
+    aumentarCantidad(){
+        this.cantidad+=1
+    }
+    mermarCantidad(){
+        this.cantidad-=1
     }
 }
 class Bebidas{
@@ -56,16 +65,26 @@ class Bebidas{
         this.imagen=imagen
         this.cantidad = cantidad
     }
-    cambiarCantidad(){
-        this.cantidad++
+    aumentarCantidad(){
+        this.cantidad+=1
+    }
+    mermarCantidad(){
+        this.cantidad-=1
     }
 }
+
 class Carrito{
     constructor(productos){
         this.productos=productos
     }
     addProducto(producto){
-        this.productos.push(producto)
+        if(this.productos.includes(producto)){
+            const indice = this.productos.indexOf(producto)
+            this.productos[indice]=producto
+        }
+        else{
+            this.productos.push(producto)
+        }
     }
     guardar(){
         localStorage.setItem("MI_CARRITO", JSON.stringify(this.productos))
@@ -82,4 +101,12 @@ class Nombre{
         localStorage.setItem("NOMBRE", JSON.stringify(this.nombre))
     }
     
+}
+class Comidas{
+    constructor(comida){
+        this.comida=comida
+    }
+    cambiarCantidad(){
+        this.comida.cantidad+=1
+    }
 }

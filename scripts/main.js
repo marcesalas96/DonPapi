@@ -12,23 +12,23 @@ function preguntarNombre() {
             text: "Ingresa tu nombre!",
             content: "input",
         }).then((value) => {
-                swal({
-                    text: "Ingreso correcto!",
-                    icon: "success",
-                })
-                let preguntoNombre = value
-                nombre = new Nombre(preguntoNombre)
-                nombre.guardarNombre(preguntoNombre)
-                nombreData = JSON.parse(localStorage.getItem("NOMBRE"))
-                personalizarNombre()
-                crearCarrito()
-            });
-        }
-        else {
+            swal({
+                text: "Ingreso correcto!",
+                icon: "success",
+            })
+            let preguntoNombre = value
+            nombre = new Nombre(preguntoNombre)
+            nombre.guardarNombre(preguntoNombre)
             nombreData = JSON.parse(localStorage.getItem("NOMBRE"))
-            nombre = new Nombre(nombreData)
             personalizarNombre()
             crearCarrito()
+        });
+    }
+    else {
+        nombreData = JSON.parse(localStorage.getItem("NOMBRE"))
+        nombre = new Nombre(nombreData)
+        personalizarNombre()
+        crearCarrito()
     }
 }
 function personalizarNombre() {
@@ -46,7 +46,7 @@ function crearBotones() {
         miBoton.addEventListener("click", () => mostrarPlatos(categoria.id))
         btnMenu.appendChild(miBoton)
     })
-    
+
 }
 function aparecerCarrito() {
     const btnCarrito = document.getElementById("btnCarrito")
@@ -108,14 +108,16 @@ function crearMenu(productosFiltrados, idCategoria) {
 }
 function mostrarVariedades(plato, divHijo) {
     const contenedorHijo = document.createElement("div")
-    contenedorHijo.setAttribute("id", "div__hijo")
-    contenedorHijo.innerHTML += `<p> 
-    ${plato.tipo} ${plato.variedad}, precio: $${plato.precio} 
-    </p> <img src="${plato.imagen}" class="div__imagen" alt="Imagen de un ${plato.tipo} de ${plato.variedad}">
-    <div class="div__botones"><button class="botonCarrito" id="botonDiv+${plato.id}">Agregar al carrito</button> </div> `
+    contenedorHijo.setAttribute("id", `div__hijo${plato.id}`)
+    contenedorHijo.setAttribute("class", "div__hijo")
+    contenedorHijo.innerHTML += `
+    <h4> ${plato.tipo} ${plato.variedad}</h4> 
+    <img src="${plato.imagen}" class="div__imagen" alt="Imagen de un ${plato.tipo} de ${plato.variedad}">
+    <h4>$${plato.precio}</h4>
+    <button class="botonCarrito" id="botonDiv+${plato.id}">Agregar al carrito</button>`
     divHijo.appendChild(contenedorHijo)
-    const boton = document.getElementById(`botonDiv+${plato.id}`)
-    boton.addEventListener("click", () => agregarAlCarrito(plato))
+    const CardsComida = document.getElementById(`div__hijo${plato.id}`)
+    CardsComida.addEventListener("click", () => agregarAlCarrito(plato))
 }
 function cerrarPlatos() {
     let div = document.querySelector("#listaMenu");
@@ -150,7 +152,7 @@ function mostrarCarrito() {
         actualizarCarrito()
         mostrarCuentaTotal()
     }
-    else{
+    else {
         actualizarCarrito()
         mostrarCuentaTotal()
     }
@@ -164,90 +166,137 @@ function actualizarCarrito(plato, producto) {
     prods.forEach(producto => {
         let nodoDiv = document.createElement("div")
         nodoDiv.setAttribute("class", "nodoDiv")
-        let resultado= producto.precio*producto.cantidad
-        nodoDiv.innerHTML = `<img src="${producto.imagen}" class ="imagen__carrito"> ${producto.tipo} de ${producto.variedad} $${producto.precio} <div class="div__carrito__div__productos__botones"><input id="inputCarrito${producto.id}" type="number" value=1 min="1" max="10"> </input> <span class="spanCarrito">$${resultado}</span><button class="botonCarrito" id="botonDiv-${producto.id}" onclick="sacarDelCarrito(${producto})">-</button></div>`
+        let resultado = producto.precio * producto.cantidad
+        nodoDiv.innerHTML = `<img src="${producto.imagen}" class ="imagen__carrito"> ${producto.tipo} de ${producto.variedad} $${producto.precio} <div class="div__carrito__div__productos__botones"><span class="spanCarrito">${producto.cantidad}</span> <span class="spanCarrito">$${resultado}</span><button class="botonCarrito" id="botonDiv-${producto.id}" onclick="sacarDelCarrito(${producto})">-</button></div>`
         nuevoContenedor.appendChild(nodoDiv)
         contenedor.appendChild(nuevoContenedor)
         const nodoDivBtn = document.querySelector(".div__carrito__div__productos__botones");
         const botonResta = document.querySelectorAll(`#botonDiv-${producto.id}`);
-        // botonResta.forEach(boton => {
-        //     boton.addEventListener("click", () => sacarDelCarrito(producto))
+        botonResta.forEach(boton => {
+            boton.addEventListener("click", () => sacarDelCarrito(producto))
 
-        // })
+        })
     })
     miCarrito.guardar()
 
 }
 
+
 function agregarAlCarrito(plato) {
-    let comidaParaAgregar = comidas.find(el => el.id == plato.id)
+    let comidaParaAgregar = listaComidas.find(el => el.id == plato.id)
     console.log(comidaParaAgregar)
     if (miCarrito.productos.includes(comidaParaAgregar)) {
-        console.log("ya existe wacho")
-        const cant = document.querySelector(`#inputCarrito${plato.id}`)
-        console.log(cant.value)
-        let valor = cant.value
-        valor++
-        console.log(valor)
-        console.log()
-        console.log(comidaParaAgregar)
-
-
+        ComidaObjeto[plato.id].aumentarCantidad()
+        let comidaParaAgregar = listaComidas.find(el => el.id == plato.id)
+        miCarrito.addProducto(comidaParaAgregar)
+        console.log(miCarrito)
+        cuentaParcial += plato.precio
+        Toastify({
+            text: "Producto agregado al carrito con exito!",
+            duration: 3000,
+            gravity: "bottom",
+            style:
+            {
+                background: "orange",
+                color: "black"
+            }
+        }).showToast()
+        Toastify({
+            text: `Su cuenta parcial es: $${cuentaParcial}`,
+            duration: 3000,
+            gravity: "bottom",
+            style:
+            {
+                background: "orange",
+                color: "black"
+            }
+        }).showToast()
+        actualizarCarrito(plato)
     }
     else {
         console.log("no existe wachin")
         miCarrito.addProducto(comidaParaAgregar)
-        cuentaParcial+= plato.precio
-            Toastify({
-                text:"Producto agregado al carrito con exito!",
-                duration: 3000,
-                gravity: "bottom",
-                style: 
-                {
-                    background: "orange",
-                    color: "black"
-                }
-            }).showToast()
-            Toastify({
-                text:`Su cuenta parcial es: $${cuentaParcial}`,
-                duration: 3000,
-                gravity: "bottom",
-                style: 
-                {
-                    background: "orange",
-                    color: "black"
-                }
-            }).showToast()
+        cuentaParcial += plato.precio
+        Toastify({
+            text: "Producto agregado al carrito con exito!",
+            duration: 3000,
+            gravity: "bottom",
+            style:
+            {
+                background: "orange",
+                color: "black"
+            }
+        }).showToast()
+        Toastify({
+            text: `Su cuenta parcial es: $${cuentaParcial}`,
+            duration: 3000,
+            gravity: "bottom",
+            style:
+            {
+                background: "orange",
+                color: "black"
+            }
+        }).showToast()
         actualizarCarrito(plato)
     }
 
 }
 function sacarDelCarrito(producto) {
-    let comidaParaSacar = comidas.find(el => el.id == producto.id)
+    let comidaParaSacar = listaComidas.find(el => el.id == producto.id)
+    console.log(comidaParaSacar)
     let index = miCarrito.productos.indexOf(comidaParaSacar)
-    miCarrito.removeProducto(index)
-    cuentaParcial -= producto.precio
-    Toastify({
-        text: "Eliminaste este producto exitosamente!",
-        duration: 3000,
-        gravity: "bottom",
-        style:
-        {
-            background: "orange",
-            color: "black"
-        }
-    }).showToast()
-    Toastify({
-        text: `Su cuenta parcial es: $${cuentaParcial}`,
-        duration: 3000,
-        gravity: "bottom",
-        style:
-        {
-            background: "orange",
-            color: "black"
-        }
-    }).showToast()
-    actualizarCarrito(producto)
+    if (miCarrito.productos[index].cantidad > 1) {
+        ComidaObjeto[producto.id].mermarCantidad()
+        let comidaParaSacar = listaComidas.find(el => el.id == producto.id)
+        console.log(comidaParaSacar)
+        cuentaParcial -= producto.precio
+        Toastify({
+            text: "Eliminaste este producto exitosamente!",
+            duration: 3000,
+            gravity: "bottom",
+            style:
+            {
+                background: "orange",
+                color: "black"
+            }
+        }).showToast()
+        Toastify({
+            text: `Su cuenta parcial es: $${cuentaParcial}`,
+            duration: 3000,
+            gravity: "bottom",
+            style:
+            {
+                background: "orange",
+                color: "black"
+            }
+        }).showToast()
+        actualizarCarrito(producto)
+    }
+    else{
+        miCarrito.removeProducto(index)
+        cuentaParcial -= producto.precio
+        Toastify({
+            text: "Eliminaste este producto exitosamente!",
+            duration: 3000,
+            gravity: "bottom",
+            style:
+            {
+                background: "orange",
+                color: "black"
+            }
+        }).showToast()
+        Toastify({
+            text: `Su cuenta parcial es: $${cuentaParcial}`,
+            duration: 3000,
+            gravity: "bottom",
+            style:
+            {
+                background: "orange",
+                color: "black"
+            }
+        }).showToast()
+        actualizarCarrito(producto)
+    }
 }
 function mostrarCuentaTotal() {
     let contenedor = document.querySelector(".div__carrito")

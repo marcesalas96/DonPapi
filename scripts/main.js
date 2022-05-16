@@ -20,7 +20,6 @@ function preguntarNombre() {
             nombre = new Nombre(preguntoNombre)
             nombre.guardarNombre(preguntoNombre)
             nombreData = JSON.parse(localStorage.getItem("NOMBRE"))
-            console.log(miCarrito)
             personalizarNombre()
             crearCarrito()
         });
@@ -28,14 +27,13 @@ function preguntarNombre() {
     else {
         nombreData = JSON.parse(localStorage.getItem("NOMBRE"))
         nombre = new Nombre(nombreData)
-        console.log(miCarrito)
         personalizarNombre()
         crearCarrito()
     }
 }
 function personalizarNombre() {
     let titulo = document.getElementById("titulo")
-    titulo.innerText = `Hola ${nombreData}! 😎` 
+    titulo.innerText = `Hola ${nombreData}! 😎`
 
 }
 function crearBotones() {
@@ -66,58 +64,114 @@ function mostrarPlatos(idCategoria) {
     contenedor.setAttribute("class", "div__comidas")
     contenedor.setAttribute("id", "div__padre")
     divPadre.appendChild(contenedor)
-    crearMenu(productosFiltrados, idCategoria)
+    crearMenu(productosFiltrados, idCategoria, divPadre)
 
 }
-function crearMenu(productosFiltrados, idCategoria) {
+function crearMenu(productosFiltrados, idCategoria, divPadre) {
     while (idCategoria == 1) {
-        const divHijo = document.querySelector(".div__comidas")
-        productosFiltrados.forEach((plato) => {
-            mostrarVariedades(plato, divHijo)
-        })
-        contador++
-        contador > 1 && cerrarPlatos()
-        break
-
+        const divComida = document.querySelector(".div__hijo")
+        if (!divComida) {
+            productosFiltrados.forEach((plato) => {
+                mostrarVariedades(plato)
+            })
+            break
+        }
+        else {
+            const nodoHijos = document.querySelectorAll(".div__comidas")
+            nodoHijos.forEach((nodo) => {
+                nodo.remove()
+            })
+            const contenedor = document.createElement("div")
+            contenedor.setAttribute("class", "div__comidas")
+            contenedor.setAttribute("id", "div__padre")
+            divPadre.appendChild(contenedor)
+            productosFiltrados.forEach((plato) => {
+                mostrarVariedades(plato)
+            })
+            break
+        }
     }
     while (idCategoria == 2) {
-        const divHijo = document.querySelector(".div__comidas")
-        productosFiltrados.forEach((plato) => {
-            mostrarVariedades(plato, divHijo)
-        })
-        contador++
-        contador > 1 && cerrarPlatos()
-        break
+        const divComida = document.querySelector(".div__hijo")
+        if (!divComida) {
+            productosFiltrados.forEach((plato) => {
+                mostrarVariedades(plato)
+            })
+            break
+        }
+        else {
+            const nodoHijos = document.querySelectorAll(".div__comidas")
+            nodoHijos.forEach((nodo) => {
+                nodo.remove()
+            })
+            const contenedor = document.createElement("div")
+            contenedor.setAttribute("class", "div__comidas")
+            contenedor.setAttribute("id", "div__padre")
+            divPadre.appendChild(contenedor)
+            productosFiltrados.forEach((plato) => {
+                mostrarVariedades(plato)
+            })
+            break
+        }
     }
     while (idCategoria == 3) {
-        const divHijo = document.querySelector(".div__comidas")
-        productosFiltrados.forEach((plato) => {
-            mostrarVariedades(plato, divHijo)
-        })
-        contador++
-        contador > 1 && cerrarPlatos()
-        break
+        const divComida = document.querySelector(".div__hijo")
+        if (!divComida) {
+            productosFiltrados.forEach((plato) => {
+                mostrarVariedades(plato)
+            })
+            break
+        }
+        else {
+            const nodoHijos = document.querySelectorAll(".div__comidas")
+            nodoHijos.forEach((nodo) => {
+                nodo.remove()
+            })
+            const contenedor = document.createElement("div")
+            contenedor.setAttribute("class", "div__comidas")
+            contenedor.setAttribute("id", "div__padre")
+            divPadre.appendChild(contenedor)
+            productosFiltrados.forEach((plato) => {
+                mostrarVariedades(plato)
+            })
+            break
+        }
     }
     while (idCategoria == 4) {
-        const divHijo = document.querySelector(".div__comidas")
-        productosFiltrados.forEach((plato) => {
-            mostrarVariedades(plato, divHijo)
-        })
-        contador++
-        contador > 1 && cerrarPlatos()
-        break
+        const divComida = document.querySelector(".div__hijo")
+        if (!divComida) {
+            productosFiltrados.forEach((plato) => {
+                mostrarVariedades(plato)
+            })
+            break
+        }
+        else {
+            const nodoHijos = document.querySelectorAll(".div__comidas")
+            nodoHijos.forEach((nodo) => {
+                nodo.remove()
+            })
+            const contenedor = document.createElement("div")
+            contenedor.setAttribute("class", "div__comidas")
+            contenedor.setAttribute("id", "div__padre")
+            divPadre.appendChild(contenedor)
+            productosFiltrados.forEach((plato) => {
+                mostrarVariedades(plato)
+            })
+            break
+        }
     }
 }
-function mostrarVariedades(plato, divHijo) {
+function mostrarVariedades(plato) {
+    const divHijo = document.querySelector(".div__comidas")
     const contenedorHijo = document.createElement("div")
     contenedorHijo.setAttribute("id", `div__hijo${plato.id}`)
     contenedorHijo.setAttribute("class", "div__hijo")
-    const titulo= document.createElement('h4')
-    titulo.textContent =`${plato.tipo} ${plato.variedad}`
+    const titulo = document.createElement('h4')
+    titulo.textContent = `${plato.tipo} ${plato.variedad}`
     const imagen = document.createElement('img')
     imagen.classList.add('div__imagen')
     imagen.setAttribute('src', plato.imagen)
-    imagen.setAttribute('alt',`Imagen de un ${plato.tipo} de ${plato.variedad}`)
+    imagen.setAttribute('alt', `Imagen de un ${plato.tipo} de ${plato.variedad}`)
     const titulo2 = document.createElement('h4')
     titulo2.textContent = `$${plato.precio}`
     const boton = document.createElement('button')
@@ -129,8 +183,9 @@ function mostrarVariedades(plato, divHijo) {
     contenedorHijo.appendChild(titulo2)
     contenedorHijo.appendChild(boton)
     divHijo.appendChild(contenedorHijo)
-    const CardsComida = document.getElementById(`div__hijo${plato.id}`)
-    CardsComida.addEventListener("click", () => agregarAlCarrito(plato))
+
+    boton.addEventListener("click", () => agregarAlCarrito(plato))
+
 }
 function cerrarPlatos() {
     let div = document.querySelector("#listaMenu");
@@ -146,8 +201,6 @@ function crearCarrito() {
     div.setAttribute("id", "divCarrito")
     div.innerHTML = `<div class="div__carrito"><div class="divCarrito1"><h3>${nombreData}, este es tu carrito!</h3><div><button id="btnCerrar2" class="btnCerrar2" onClick=cerrarCarrito()>X</button></div></div></div> `
     main.appendChild(div)
-    // const btnCerrar = document.querySelector("#btnCerrar2")
-    // btnCerrar.addEventListener("click", ()=> console.log("clicked"))
     mostrarCarrito()
 
 }
@@ -173,29 +226,53 @@ function mostrarCarrito() {
 function actualizarCarrito(plato, producto) {
     let contenedor = document.querySelector(".div__carrito__div")
     const prods = [... new Set(miCarrito.productos)]
-    contenedor.innerHTML = ` 
-    <table class="table align-middle">
-        <thead>
-            <tr>
-            <th scope="col">Producto</th>
-            <th scope="col">Precio</th>
-            <th scope="col">Cantidad</th>
-            <th scope="col">Total</th>
+    if (cantidades == 0) {
+        contenedor.innerHTML = ` 
+        <table class="table align-middle">
+            <thead>
+                <tr>
+                <th scope="col">Producto</th>
+                <th scope="col">Precio</th>
+                <th scope="col">Cantidad</th>
+                <th scope="col">Total</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+        <tfoot>
+        <tr>
+        ${nombreData}, tu carrito esta vacio!
         </tr>
-    </thead>
-    <tbody>
-    </tbody>
-    <tfoot>
-    <tr>
-    <td></td>
-    <td></td>
-    <td>Cantidad total de productos: ${cantidades} </td>
-    <td>Total: $${cuentaParcial}</td>
-    </tr>
-    </tfoot>
-    </table>
-    `
-    
+        </tfoot>
+        </table>
+        `
+
+    }
+    else {
+        contenedor.innerHTML = ` 
+        <table class="table align-middle">
+            <thead>
+                <tr>
+                <th scope="col">Producto</th>
+                <th scope="col">Precio</th>
+                <th scope="col">Cantidad</th>
+                <th scope="col">Total</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+        <tfoot>
+        <tr>
+        <td></td>
+        <td></td>
+        <td>Cantidad total de productos: ${cantidades} </td>
+        <td>Total: $${cuentaParcial}</td>
+        </tr>
+        </tfoot>
+        </table>
+        `
+    }
+
     prods.forEach(producto => {
         let table = document.querySelector("tbody")
         let nodoDiv = document.createElement("tr")
@@ -205,7 +282,8 @@ function actualizarCarrito(plato, producto) {
         table.appendChild(nodoDiv)
         const botonResta = document.querySelectorAll(`#botonDiv-${producto.id}`);
         botonResta.forEach(boton => {
-            boton.addEventListener("click", e => sacarDelCarrito(producto))})
+            boton.addEventListener("click", e => sacarDelCarrito(producto))
+        })
     })
     miCarrito.guardar()
 
@@ -214,7 +292,7 @@ function actualizarCarrito(plato, producto) {
 
 function agregarAlCarrito(plato) {
     let comidaParaAgregar = listaComidas.find(el => el.id == plato.id)
-    cantidades+=1
+    cantidades += 1
     if (miCarrito.productos.includes(comidaParaAgregar)) {
         ComidaObjeto[plato.id].aumentarCantidad()
         let comidaParaAgregar = listaComidas.find(el => el.id == plato.id)
@@ -271,11 +349,10 @@ function agregarAlCarrito(plato) {
 }
 function sacarDelCarrito(producto) {
     let comidaParaSacar = listaComidas.find(el => el.id == producto.id)
-    cantidades-=1
+    cantidades -= 1
     let index = miCarrito.productos.indexOf(comidaParaSacar)
-    console.log(ComidaObjeto[producto.id])
-    if (index == -1){
-        index=0
+    if (index == -1) {
+        index = 0
     }
     if (miCarrito.productos[index].cantidad > 1) {
         ComidaObjeto[producto.id].mermarCantidad()
@@ -341,18 +418,14 @@ function mostrarCuentaTotal() {
             text: `El total es: $${cuentaTotal}`,
             buttons: ["CANCELAR", "PAGAR"]
         }).then((aPagar) => {
-            aPagar ? eliminarCarrito()  : swal("Pago cancelado!", { icon: "error", })
+            aPagar ? eliminarCarrito() : swal("Pago cancelado!", { icon: "error", })
         })
     })
 }
 function eliminarCarrito() {
-    miCarrito.productos.forEach((producto)=>{
+    miCarrito.productos.forEach((producto) => {
         ComidaObjeto[producto.id].reiniciarCantidad()
     })
-    console.log(cuentaParcial)
-    cuentaParcial = 0
-    cantidades = 0
-    console.log(cuentaParcial)
     let eliminarDivCarrito = document.querySelectorAll(".nodoDiv")
     eliminarDivCarrito.forEach(nodo => {
         nodo.remove()
@@ -360,27 +433,18 @@ function eliminarCarrito() {
     miCarrito.productos.splice(0, miCarrito.productos.length)
     localStorage.clear()
     swal("Pagaste!", { icon: "success", })
-}
-function vaciarCarrito() {
-    swal({
-        icon: "warning",
-        title: `${nombreData}, seguro que queres vaciar tu carrito?`,
-        buttons: ["CANCELAR", "VACIAR"]
-    }).then((vaciar) => {
-        if (vaciar) {
-            let eliminarDivCarrito = document.querySelectorAll(".nodoDiv")
-            eliminarDivCarrito.forEach(nodo => {
-                nodo.remove()
-            })
-            miCarrito.productos.splice(0, miCarrito.productos.length)
-            cuentaParcial = 0
-            localStorage.clear()
-            swal("Eliminaste tu carrito", { icon: "success", })
-        }
-        else {
-            swal("Cancelaste la operacion!", { icon: "error", })
-        }
-    })
+    let div = document.querySelector("#divCarrito")
+    div.classList.toggle("activo")
+    cuentaParcial = 0
+    cantidades = 0
+    let tfoot = document.querySelector("tfoot")
+    tfoot.innerHTML = `
+    <tr>
+    <td></td>
+    <td></td>
+    <td>Cantidad total de productos: 0 </td>
+    <td>Total: $0</td>
+    </tr>`
 }
 function crearBebidas(data) {
     const divPadre = document.querySelector("#listaMenu")
@@ -393,25 +457,60 @@ function crearBebidas(data) {
 
 }
 function mostrarBebidas(data) {
-    const divPadre = document.createElement("div")
-    divPadre.setAttribute("id", "divFetch")
-    const main = document.querySelector("main")
-    divPadre.innerHTML = `<div class="div__headerFetch"><h2>Nuestra carta de tragos solo puede ser consumida en nuestro local!</h2><button class = "btnCerrar">X</button></div>`
-    main.appendChild(divPadre)
-    const btnCerrar = document.querySelector(".btnCerrar")
-    btnCerrar.addEventListener("click", () => cerrarPlatosFetch())
-    const divHijo = document.createElement("div")
-    divHijo.setAttribute("class", "divFetch__hijo")
-    divPadre.appendChild(divHijo)
-    data.drinks.forEach((trago) => {
-        const divFetchHijo = document.createElement("div")
-        divFetchHijo.setAttribute("id", "div__hijo__fetch")
-        divFetchHijo.innerHTML = `
+    const contenedor = document.querySelector("#divFetch")
+    if (!contenedor) {
+        const divPadre = document.createElement("div")
+        divPadre.setAttribute("id", "divFetch")
+        const main = document.querySelector("main")
+        divPadre.innerHTML = `<div class="div__headerFetch"><h2>Nuestra carta de tragos solo puede ser consumida en nuestro local!</h2><button class = "btnCerrar">X</button></div>`
+        main.appendChild(divPadre)
+        const btnCerrar = document.querySelector(".btnCerrar")
+        btnCerrar.addEventListener("click", () => cerrarPlatosFetch())
+        const divHijo = document.createElement("div")
+        divHijo.setAttribute("class", "divFetch__hijo")
+        divPadre.appendChild(divHijo)
+        data.drinks.forEach((trago) => {
+            const divFetchHijo = document.createElement("div")
+            divFetchHijo.setAttribute("id", "div__hijo__fetch")
+            divFetchHijo.innerHTML = `
         <h3>${trago.strDrink}</h3>
         <div class="div__imagen"><img alt="Imagen de un trago ${trago.strDrink}" src ="${trago.strDrinkThumb}"></div>
         `
-        divHijo.appendChild(divFetchHijo)
-    })
+            divHijo.appendChild(divFetchHijo)
+        })
+        const card = document.querySelectorAll("#div__hijo__fetch")
+        card.forEach((tarjeta)=>{
+            tarjeta.addEventListener("click", ()=> {
+                swal({
+                    title: `${nombreData} no seas borrachin!! 🥴`,
+                    text: "Los tragos son solo en el local!",
+                    icon: "warning"
+                })
+            })
+        })
+    }
+    else{
+        contenedor.remove()
+        const divPadre = document.createElement("div")
+        divPadre.setAttribute("id", "divFetch")
+        const main = document.querySelector("main")
+        divPadre.innerHTML = `<div class="div__headerFetch"><h2>Nuestra carta de tragos solo puede ser consumida en nuestro local!</h2><button class = "btnCerrar">X</button></div>`
+        main.appendChild(divPadre)
+        const btnCerrar = document.querySelector(".btnCerrar")
+        btnCerrar.addEventListener("click", () => cerrarPlatosFetch())
+        const divHijo = document.createElement("div")
+        divHijo.setAttribute("class", "divFetch__hijo")
+        divPadre.appendChild(divHijo)
+        data.drinks.forEach((trago) => {
+            const divFetchHijo = document.createElement("div")
+            divFetchHijo.setAttribute("id", "div__hijo__fetch")
+            divFetchHijo.innerHTML = `
+        <h3>${trago.strDrink}</h3>
+        <div class="div__imagen"><img alt="Imagen de un trago ${trago.strDrink}" src ="${trago.strDrinkThumb}"></div>
+        `
+            divHijo.appendChild(divFetchHijo)
+        })
+    }
 }
 function cerrarPlatosFetch() {
     const main = document.querySelector("main")

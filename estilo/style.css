@@ -69,6 +69,7 @@ main{
   -webkit-user-select: none;
   touch-action: manipulation;
   vertical-align: middle;
+  margin-bottom: 1rem;
 }
 
 .botonMenu:hover,

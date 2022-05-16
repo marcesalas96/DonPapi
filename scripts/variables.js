@@ -2,22 +2,6 @@
 let cantidades = 0
 let totalCarrito = 0
 let nombreData = JSON.parse(localStorage.getItem("NOMBRE"))
-const data = JSON.parse(localStorage.getItem("MI_CARRITO"))
-!data ? miCarrito = new Carrito([]) : miCarrito = new Carrito(data), cantidades= miCarrito.productos.reduce((acc, elemento) => acc += elemento.cantidad , 0), miCarrito.productos.forEach((producto) =>{
-    totalCarrito += producto.precio * producto.cantidad
-    console.log(producto)
-})
-console.log(miCarrito)
-
-let cuentaCarrito = totalCarrito
-let cuentaParcial = cuentaCarrito
-
-const caloriasTacos = []
-const caloriasBurritos = []
-const caloriasPostres = []
-const caloriasBebidas = []
-
-
 
 //Construyendo Objetos 
 const variedadBurrito = new Variedad(1, "Burritos")
@@ -39,6 +23,11 @@ const postreVolcan = new Postres(12, "Postre", "Volcan de chocolate", 450, 3, "m
 const bebidaCoca = new Bebidas(13, "Bebida", "Coca-Cola", 150, 4, "media/cocaCola.jpg", 1)
 const bebidaTrago = new Bebidas(14, "Bebida", "Margarita", 300, 4, "media/margarita.jpg", 1)
 
+const data = JSON.parse(localStorage.getItem("MI_CARRITO"))
+!data ? miCarrito = new Carrito([]) : miCarrito = new Carrito(data), cantidades= miCarrito.productos.reduce((acc, elemento) => acc += elemento.cantidad , 0), miCarrito.productos.forEach((producto) =>{
+    totalCarrito += producto.precio * producto.cantidad
+})
+let cuentaParcial = totalCarrito
 
 // Declaracion variables
 let contador = 0
@@ -72,3 +61,4 @@ const ComidaObjeto = {
     13:bebidaCoca,
     14:bebidaTrago
 }
+

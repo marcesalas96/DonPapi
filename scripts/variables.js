@@ -1,8 +1,15 @@
+
+let cantidades = 0
+let totalCarrito = 0
 let nombreData = JSON.parse(localStorage.getItem("NOMBRE"))
 const data = JSON.parse(localStorage.getItem("MI_CARRITO"))
-!data ? miCarrito = new Carrito([]) : miCarrito = new Carrito(data)
-console.log(data)
-let cuentaCarrito = miCarrito.productos.reduce((acc, elemento) => acc += elemento.precio, 0)
+!data ? miCarrito = new Carrito([]) : miCarrito = new Carrito(data), cantidades= miCarrito.productos.reduce((acc, elemento) => acc += elemento.cantidad , 0), miCarrito.productos.forEach((producto) =>{
+    totalCarrito += producto.precio * producto.cantidad
+    console.log(producto)
+})
+console.log(miCarrito)
+
+let cuentaCarrito = totalCarrito
 let cuentaParcial = cuentaCarrito
 
 const caloriasTacos = []

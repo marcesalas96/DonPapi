@@ -20,6 +20,9 @@ class Burritos{
     mermarCantidad(){
         this.cantidad-=1
     }
+    reiniciarCantidad(){
+        this.cantidad=1
+    }
 }
 class Tacos{
     constructor (id, tipo, variedad, precio, categoria,imagen, cantidad){ 
@@ -36,6 +39,9 @@ class Tacos{
     }
     mermarCantidad(){
         this.cantidad-=1
+    }
+    reiniciarCantidad(){
+        this.cantidad=1
     }
 }
 class Postres{
@@ -54,6 +60,9 @@ class Postres{
     mermarCantidad(){
         this.cantidad-=1
     }
+    reiniciarCantidad(){
+        this.cantidad=1
+    }
 }
 class Bebidas{
     constructor (id, tipo, variedad, precio, categoria, imagen, cantidad){ 
@@ -70,6 +79,9 @@ class Bebidas{
     }
     mermarCantidad(){
         this.cantidad-=1
+    }
+    reiniciarCantidad(){
+        this.cantidad=1
     }
 }
 
@@ -92,6 +104,7 @@ class Carrito{
     removeProducto(index){
         this.productos.splice(index,1)
     }
+
 }
 class Nombre{
     constructor(nombre){
@@ -101,12 +114,4 @@ class Nombre{
         localStorage.setItem("NOMBRE", JSON.stringify(this.nombre))
     }
     
-}
-class Comidas{
-    constructor(comida){
-        this.comida=comida
-    }
-    cambiarCantidad(){
-        this.comida.cantidad+=1
-    }
 }

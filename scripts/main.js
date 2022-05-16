@@ -20,6 +20,7 @@ function preguntarNombre() {
             nombre = new Nombre(preguntoNombre)
             nombre.guardarNombre(preguntoNombre)
             nombreData = JSON.parse(localStorage.getItem("NOMBRE"))
+            console.log(miCarrito)
             personalizarNombre()
             crearCarrito()
         });
@@ -27,13 +28,14 @@ function preguntarNombre() {
     else {
         nombreData = JSON.parse(localStorage.getItem("NOMBRE"))
         nombre = new Nombre(nombreData)
+        console.log(miCarrito)
         personalizarNombre()
         crearCarrito()
     }
 }
 function personalizarNombre() {
     let titulo = document.getElementById("titulo")
-    titulo.innerText = `Bienvenid@, ${nombreData}!`
+    titulo.innerText = `Hola ${nombreData}! 😎` 
 
 }
 function crearBotones() {
@@ -110,11 +112,22 @@ function mostrarVariedades(plato, divHijo) {
     const contenedorHijo = document.createElement("div")
     contenedorHijo.setAttribute("id", `div__hijo${plato.id}`)
     contenedorHijo.setAttribute("class", "div__hijo")
-    contenedorHijo.innerHTML += `
-    <h4> ${plato.tipo} ${plato.variedad}</h4> 
-    <img src="${plato.imagen}" class="div__imagen" alt="Imagen de un ${plato.tipo} de ${plato.variedad}">
-    <h4>$${plato.precio}</h4>
-    <button class="botonCarrito" id="botonDiv+${plato.id}">Agregar al carrito</button>`
+    const titulo= document.createElement('h4')
+    titulo.textContent =`${plato.tipo} ${plato.variedad}`
+    const imagen = document.createElement('img')
+    imagen.classList.add('div__imagen')
+    imagen.setAttribute('src', plato.imagen)
+    imagen.setAttribute('alt',`Imagen de un ${plato.tipo} de ${plato.variedad}`)
+    const titulo2 = document.createElement('h4')
+    titulo2.textContent = `$${plato.precio}`
+    const boton = document.createElement('button')
+    boton.classList.add('botonCarrito')
+    boton.setAttribute('id', `botonDiv+${plato.id}`)
+    boton.textContent = 'Agregar al carrito'
+    contenedorHijo.appendChild(titulo)
+    contenedorHijo.appendChild(imagen)
+    contenedorHijo.appendChild(titulo2)
+    contenedorHijo.appendChild(boton)
     divHijo.appendChild(contenedorHijo)
     const CardsComida = document.getElementById(`div__hijo${plato.id}`)
     CardsComida.addEventListener("click", () => agregarAlCarrito(plato))
@@ -147,7 +160,7 @@ function mostrarCarrito() {
     let divCarrito = document.querySelector(".div__carrito__div")
     if (divCarrito === null) {
         divCarrito = document.createElement("div");
-        divCarrito.setAttribute("class", "div__carrito__div")
+        divCarrito.setAttribute("class", "div__carrito__div table-resposive")
         div.appendChild(divCarrito)
         actualizarCarrito()
         mostrarCuentaTotal()
@@ -159,23 +172,40 @@ function mostrarCarrito() {
 }
 function actualizarCarrito(plato, producto) {
     let contenedor = document.querySelector(".div__carrito__div")
-    var prods = miCarrito.productos
-    let nuevoContenedor = document.createElement("div")
-    nuevoContenedor.setAttribute("class", "div__carrito__div__productos")
-    contenedor.innerHTML = ""
+    const prods = [... new Set(miCarrito.productos)]
+    contenedor.innerHTML = ` 
+    <table class="table align-middle">
+        <thead>
+            <tr>
+            <th scope="col">Producto</th>
+            <th scope="col">Precio</th>
+            <th scope="col">Cantidad</th>
+            <th scope="col">Total</th>
+        </tr>
+    </thead>
+    <tbody>
+    </tbody>
+    <tfoot>
+    <tr>
+    <td></td>
+    <td></td>
+    <td>Cantidad total de productos: ${cantidades} </td>
+    <td>Total: $${cuentaParcial}</td>
+    </tr>
+    </tfoot>
+    </table>
+    `
+    
     prods.forEach(producto => {
-        let nodoDiv = document.createElement("div")
+        let table = document.querySelector("tbody")
+        let nodoDiv = document.createElement("tr")
         nodoDiv.setAttribute("class", "nodoDiv")
         let resultado = producto.precio * producto.cantidad
-        nodoDiv.innerHTML = `<img src="${producto.imagen}" class ="imagen__carrito"> ${producto.tipo} de ${producto.variedad} $${producto.precio} <div class="div__carrito__div__productos__botones"><span class="spanCarrito">${producto.cantidad}</span> <span class="spanCarrito">$${resultado}</span><button class="botonCarrito" id="botonDiv-${producto.id}" onclick="sacarDelCarrito(${producto})">-</button></div>`
-        nuevoContenedor.appendChild(nodoDiv)
-        contenedor.appendChild(nuevoContenedor)
-        const nodoDivBtn = document.querySelector(".div__carrito__div__productos__botones");
+        nodoDiv.innerHTML += `<th scope="row" class="tableHead"><img src="${producto.imagen}" class ="imagen__carrito"> ${producto.tipo} de ${producto.variedad}</th> <td>$${producto.precio}</td> <td>${producto.cantidad}</td><td><span class="spanCarrito">$${resultado}</span></td><td><button class="botonCarrito" id="botonDiv-${producto.id}">-</button></div></td>`
+        table.appendChild(nodoDiv)
         const botonResta = document.querySelectorAll(`#botonDiv-${producto.id}`);
         botonResta.forEach(boton => {
-            boton.addEventListener("click", () => sacarDelCarrito(producto))
-
-        })
+            boton.addEventListener("click", e => sacarDelCarrito(producto))})
     })
     miCarrito.guardar()
 
@@ -184,12 +214,11 @@ function actualizarCarrito(plato, producto) {
 
 function agregarAlCarrito(plato) {
     let comidaParaAgregar = listaComidas.find(el => el.id == plato.id)
-    console.log(comidaParaAgregar)
+    cantidades+=1
     if (miCarrito.productos.includes(comidaParaAgregar)) {
         ComidaObjeto[plato.id].aumentarCantidad()
         let comidaParaAgregar = listaComidas.find(el => el.id == plato.id)
         miCarrito.addProducto(comidaParaAgregar)
-        console.log(miCarrito)
         cuentaParcial += plato.precio
         Toastify({
             text: "Producto agregado al carrito con exito!",
@@ -214,7 +243,6 @@ function agregarAlCarrito(plato) {
         actualizarCarrito(plato)
     }
     else {
-        console.log("no existe wachin")
         miCarrito.addProducto(comidaParaAgregar)
         cuentaParcial += plato.precio
         Toastify({
@@ -243,12 +271,15 @@ function agregarAlCarrito(plato) {
 }
 function sacarDelCarrito(producto) {
     let comidaParaSacar = listaComidas.find(el => el.id == producto.id)
-    console.log(comidaParaSacar)
+    cantidades-=1
     let index = miCarrito.productos.indexOf(comidaParaSacar)
+    console.log(ComidaObjeto[producto.id])
+    if (index == -1){
+        index=0
+    }
     if (miCarrito.productos[index].cantidad > 1) {
         ComidaObjeto[producto.id].mermarCantidad()
         let comidaParaSacar = listaComidas.find(el => el.id == producto.id)
-        console.log(comidaParaSacar)
         cuentaParcial -= producto.precio
         Toastify({
             text: "Eliminaste este producto exitosamente!",
@@ -272,7 +303,7 @@ function sacarDelCarrito(producto) {
         }).showToast()
         actualizarCarrito(producto)
     }
-    else{
+    else {
         miCarrito.removeProducto(index)
         cuentaParcial -= producto.precio
         Toastify({
@@ -310,17 +341,23 @@ function mostrarCuentaTotal() {
             text: `El total es: $${cuentaTotal}`,
             buttons: ["CANCELAR", "PAGAR"]
         }).then((aPagar) => {
-            aPagar ? eliminarCarrito() : swal("Pago cancelado!", { icon: "error", })
+            aPagar ? eliminarCarrito()  : swal("Pago cancelado!", { icon: "error", })
         })
     })
 }
 function eliminarCarrito() {
+    miCarrito.productos.forEach((producto)=>{
+        ComidaObjeto[producto.id].reiniciarCantidad()
+    })
+    console.log(cuentaParcial)
+    cuentaParcial = 0
+    cantidades = 0
+    console.log(cuentaParcial)
     let eliminarDivCarrito = document.querySelectorAll(".nodoDiv")
     eliminarDivCarrito.forEach(nodo => {
         nodo.remove()
     })
     miCarrito.productos.splice(0, miCarrito.productos.length)
-    cuentaParcial = 0
     localStorage.clear()
     swal("Pagaste!", { icon: "success", })
 }
